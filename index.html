@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
@@ -2715,8 +2715,8 @@
     img.src = dataUrl;
     img.alt = `Projeto ${itemNum}`;
 
-    // Salvar em sessionStorage
-    sessionStorage.setItem(`portfolio_img_${itemNum}`, dataUrl);
+    // Salvar em localStorage
+    localStorage.setItem(`portfolio_img_${itemNum}`, dataUrl);
 
     // Feedback visual
     setTimeout(() => {
@@ -2754,13 +2754,13 @@
     const img = item.querySelector('.portfolio-img');
     if (img) img.remove();
 
-    // Remover de sessionStorage
-    sessionStorage.removeItem(`portfolio_img_${itemNum}`);
+    // Remover de localStorage
+    localStorage.removeItem(`portfolio_img_${itemNum}`);
   }
 
   function loadSavedImages() {
     for (let i = 1; i <= 6; i++) {
-      const saved = sessionStorage.getItem(`portfolio_img_${i}`);
+      const saved = localStorage.getItem(`portfolio_img_${i}`);
       if (saved) {
         // Aplicar ao portfólio
         const item = document.querySelectorAll('.portfolio-item')[i - 1];
@@ -2927,9 +2927,9 @@
       media: projectsTemp.map(m => ({ type: m.type, dataUrl: m.dataUrl, mimeType: m.mimeType, fileName: m.fileName }))
     };
 
-    let projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    let projects = JSON.parse(localStorage.getItem('projects') || '[]');
     projects.push(project);
-    sessionStorage.setItem('projects', JSON.stringify(projects));
+    localStorage.setItem('projects', JSON.stringify(projects));
 
     alert('✓ Projeto salvo com sucesso!');
     document.getElementById('projectForm').reset();
@@ -2940,7 +2940,7 @@
   }
 
   function loadProjects() {
-    const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
     const list = document.getElementById('projectsList');
 
     if (projects.length === 0) {
@@ -2981,9 +2981,9 @@
   function deleteProject(idx) {
     if (!confirm('Tem certeza que deseja deletar este projeto?')) return;
     
-    let projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    let projects = JSON.parse(localStorage.getItem('projects') || '[]');
     projects.splice(idx, 1);
-    sessionStorage.setItem('projects', JSON.stringify(projects));
+    localStorage.setItem('projects', JSON.stringify(projects));
     loadProjects();
   }
 
@@ -2994,7 +2994,7 @@
   }
 
   function openProjectModal(projectId) {
-    const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
     const project = projects.find(p => p.id === projectId);
     if (!project) return;
 
@@ -3042,7 +3042,7 @@
   }
 
   function prevGalleryImage() {
-    const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
     const project = projects.find(p => p.id === currentProjectIndex);
     const media = getProjectMedia(project);
     currentGalleryImageIndex = (currentGalleryImageIndex - 1 + media.length) % media.length;
@@ -3050,7 +3050,7 @@
   }
 
   function nextGalleryImage() {
-    const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
     const project = projects.find(p => p.id === currentProjectIndex);
     const media = getProjectMedia(project);
     currentGalleryImageIndex = (currentGalleryImageIndex + 1) % media.length;
@@ -3059,13 +3059,13 @@
 
   function goToGalleryImage(idx) {
     currentGalleryImageIndex = idx;
-    const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
     const project = projects.find(p => p.id === currentProjectIndex);
     renderGallery(project);
   }
 
   function openPortfolioProject(itemNum) {
-    const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
     // Encontra o projeto por ID ou número
     const project = projects[itemNum - 1] || projects.find(p => p.id === itemNum);
     
@@ -3183,10 +3183,10 @@
       // Sanitizar nome do arquivo
       const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
       
-      // Salvar no sessionStorage
-      sessionStorage.setItem('hero_media', dataUrl);
-      sessionStorage.setItem('hero_media_name', safeName);
-      sessionStorage.setItem('hero_media_type', file.type);
+      // Salvar no localStorage
+      localStorage.setItem('hero_media', dataUrl);
+      localStorage.setItem('hero_media_name', safeName);
+      localStorage.setItem('hero_media_type', file.type);
       
       // Carregar preview
       loadHeroMedia();
@@ -3195,9 +3195,9 @@
   }
 
   function loadHeroMedia() {
-    const mediaData = sessionStorage.getItem('hero_media');
-    const mediaName = sessionStorage.getItem('hero_media_name');
-    const mediaType = sessionStorage.getItem('hero_media_type');
+    const mediaData = localStorage.getItem('hero_media');
+    const mediaName = localStorage.getItem('hero_media_name');
+    const mediaType = localStorage.getItem('hero_media_type');
     const previewDiv = document.getElementById('heroPreview');
 
     if (!mediaData) {
@@ -3225,7 +3225,7 @@
   }
 
   function applyHeroMedia() {
-    const mediaData = sessionStorage.getItem('hero_media');
+    const mediaData = localStorage.getItem('hero_media');
     if (mediaData) {
       // Aplicar ao Hero
       const hero = document.querySelector('#hero');
@@ -3240,9 +3240,9 @@
 
   function removeHeroMedia() {
     if (confirm('Remover esta mídia?')) {
-      sessionStorage.removeItem('hero_media');
-      sessionStorage.removeItem('hero_media_name');
-      sessionStorage.removeItem('hero_media_type');
+      localStorage.removeItem('hero_media');
+      localStorage.removeItem('hero_media_name');
+      localStorage.removeItem('hero_media_type');
       document.getElementById('heroFile').value = '';
       loadHeroMedia();
     }
@@ -3291,8 +3291,8 @@
       const dataUrl = e.target.result;
       const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
       
-      sessionStorage.setItem('about_image', dataUrl);
-      sessionStorage.setItem('about_image_name', safeName);
+      localStorage.setItem('about_image', dataUrl);
+      localStorage.setItem('about_image_name', safeName);
       
       loadAboutImage();
     };
@@ -3300,8 +3300,8 @@
   }
 
   function loadAboutImage() {
-    const imageData = sessionStorage.getItem('about_image');
-    const imageName = sessionStorage.getItem('about_image_name');
+    const imageData = localStorage.getItem('about_image');
+    const imageName = localStorage.getItem('about_image_name');
     const previewDiv = document.getElementById('aboutPreview');
 
     if (!imageData) {
@@ -3324,7 +3324,7 @@
   }
 
   function applyAboutImage() {
-    const imageData = sessionStorage.getItem('about_image');
+    const imageData = localStorage.getItem('about_image');
     if (imageData) {
       const wrap = document.querySelector('.about-image-wrap');
       if (wrap) {
@@ -3345,8 +3345,8 @@
 
   function removeAboutImage() {
     if (confirm('Remover esta imagem?')) {
-      sessionStorage.removeItem('about_image');
-      sessionStorage.removeItem('about_image_name');
+      localStorage.removeItem('about_image');
+      localStorage.removeItem('about_image_name');
       document.getElementById('aboutFile').value = '';
       const wrap = document.querySelector('.about-image-wrap');
       if (wrap) {
@@ -3364,7 +3364,7 @@
     loadProjects();
 
     // Carregar imagem da seção Sobre se existir
-    const aboutImage = sessionStorage.getItem('about_image');
+    const aboutImage = localStorage.getItem('about_image');
     if (aboutImage) {
       const wrap = document.querySelector('.about-image-wrap');
       if (wrap) {
@@ -3381,3 +3381,4 @@
 </script>
 </body>
 </html>
+
