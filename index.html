@@ -1663,153 +1663,20 @@
     background: rgba(231,76,60,0.1);
   }
 
-  /* ── VIDEOS SECTION ── */
-  #videos {
-    padding: 8rem 3rem;
-    background: var(--black);
-  }
-
-  .videos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .video-card {
-    background: var(--slate);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s;
-  }
-
-  .video-card:hover {
-    border-color: var(--purple);
-    transform: translateY(-4px);
-  }
-
-  .video-embed {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-  }
-
-  .video-embed iframe {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    border: none;
-  }
-
-  .video-info {
-    padding: 1.2rem 1.5rem;
-  }
-
-  .video-info h4 {
-    color: var(--white);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.3rem;
-  }
-
-  .video-info p {
-    color: var(--muted);
-    font-size: 0.78rem;
-    line-height: 1.5;
-  }
-
-  .videos-empty {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 4rem 2rem;
-    color: var(--muted);
-    font-size: 0.9rem;
-    border: 1px dashed var(--border);
-    border-radius: 4px;
-  }
-
-  .videos-empty svg {
-    width: 48px; height: 48px;
-    color: var(--purple);
-    opacity: 0.3;
-    margin-bottom: 1rem;
-  }
-
-  .video-admin-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .video-admin-form .form-group label {
-    color: var(--muted);
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-
-  .video-admin-form .form-group input,
-  .video-admin-form .form-group textarea {
-    background: var(--carbon);
-    border: 1px solid rgba(124,58,237,0.2);
-    border-bottom: 1px solid rgba(124,58,237,0.4);
-    color: var(--white);
-    padding: 0.7rem 0.8rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    outline: none;
+  /* gallery main media container */
+  #galleryMainMedia {
     width: 100%;
-    transition: border-color 0.2s;
-  }
-
-  .video-admin-form .form-group input:focus,
-  .video-admin-form .form-group textarea:focus {
-    border-bottom-color: var(--purple);
-  }
-
-  .videos-admin-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-top: 1.5rem;
-  }
-
-  .video-admin-item {
-    background: var(--carbon);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    padding: 0.8rem 1rem;
+    height: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.8rem;
+    justify-content: center;
+    background: var(--carbon);
   }
-
-  .video-admin-item-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .video-admin-item-info strong {
-    color: var(--white);
-    font-size: 0.8rem;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .video-admin-item-info span {
-    color: var(--muted);
-    font-size: 0.7rem;
-  }
-
-  @media (max-width: 768px) {
-    #videos { padding: 4rem 1.5rem; }
-    .videos-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+  #galleryMainMedia img,
+  #galleryMainMedia video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   /* ── LOGIN MODAL ── */
@@ -1922,7 +1789,6 @@
   <ul class="nav-links">
     <li><a href="#servicos">Serviços</a></li>
     <li><a href="#portfolio">Portfólio</a></li>
-    <li><a href="#videos">Vídeos</a></li>
     <li><a href="#sobre">Sobre</a></li>
     <li><a href="#processo">Processo</a></li>
   </ul>
@@ -2183,7 +2049,7 @@
 
     <div class="project-gallery">
       <div class="gallery-main">
-        <img id="galleryMainImg" src="" alt=""/>
+        <div id="galleryMainMedia"></div>
         <button class="gallery-nav prev" onclick="prevGalleryImage()">‹</button>
         <button class="gallery-nav next" onclick="nextGalleryImage()">›</button>
         <div class="gallery-counter">
@@ -2212,7 +2078,6 @@
       <button class="projects-tab" onclick="showContactsTab()">💬 Mensagens</button>
       <button class="projects-tab" onclick="showMediaTab()">🎬 Mídia Hero</button>
       <button class="projects-tab" onclick="showAboutImageTab()">🖼️ Sobre Nós</button>
-      <button class="projects-tab" onclick="showVideosTab()">▶️ Vídeos</button>
     </div>
 
     <!-- ABA: LISTA DE PROJETOS -->
@@ -2256,16 +2121,16 @@
         </div>
 
         <div class="form-group">
-          <label>Fotos do Projeto</label>
+          <label>Fotos e Vídeos do Projeto</label>
           <div class="file-upload-multiple" id="projectFilesUpload" ondrop="handleProjectFilesDrop(event)" ondragover="handleDragOver(event)">
-            <input type="file" id="projectFiles" accept="image/*" multiple onchange="handleProjectFilesSelect(event)"/>
+            <input type="file" id="projectFiles" accept="image/*,video/*" multiple onchange="handleProjectFilesSelect(event)"/>
             <div class="upload-prompt">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="17 8 12 3 7 8"></polyline>
                 <line x1="12" y1="3" x2="12" y2="15"></line>
               </svg>
-              <p>Arraste as fotos aqui ou clique para selecionar múltiplas imagens</p>
+              <p>Arraste fotos e vídeos aqui ou clique para selecionar<br><small style="opacity:0.6">JPG, PNG, MP4, MOV, WebM — máx 100MB por arquivo</small></p>
             </div>
           </div>
           <div class="project-images-preview" id="projectImagesPreview"></div>
@@ -2308,30 +2173,6 @@
           <strong>💡 Dica:</strong> Use imagens em alta qualidade (1920x1080px ou maior). Vídeos serão convertidos para poster automático.
         </p>
       </div>
-    </div>
-
-    <!-- ABA: VÍDEOS -->
-    <div class="projects-tab-content" id="tabVideos">
-      <h4 style="color: var(--white); margin-bottom: 0.5rem;">Adicionar Vídeo</h4>
-      <p style="color: var(--muted); font-size: 0.82rem; margin-bottom: 1.2rem;">Cole a URL do YouTube ou Vimeo para exibir na seção de vídeos do site.</p>
-
-      <form class="video-admin-form" onsubmit="saveVideo(event)">
-        <div class="form-group">
-          <label>URL do Vídeo (YouTube ou Vimeo)</label>
-          <input type="url" id="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required/>
-        </div>
-        <div class="form-group">
-          <label>Título</label>
-          <input type="text" id="videoTitle" placeholder="Ex: Clipe Institucional Marca X" required/>
-        </div>
-        <div class="form-group">
-          <label>Descrição (opcional)</label>
-          <textarea id="videoDesc" placeholder="Breve descrição do vídeo..." style="min-height:60px; resize: vertical;"></textarea>
-        </div>
-        <button type="submit" class="form-submit" style="align-self: flex-start; margin-top: 0.3rem;">Adicionar Vídeo</button>
-      </form>
-
-      <div class="videos-admin-list" id="videosAdminList"></div>
     </div>
 
     <!-- ABA: EDITAR IMAGEM SOBRE NÓS -->
@@ -2482,25 +2323,6 @@
     </div>
   </div>
 </div>
-</section>
-
-<!-- VIDEOS -->
-<section id="videos">
-  <div class="section-header reveal">
-    <div>
-      <div class="section-eyebrow">Nossos vídeos</div>
-      <h2 class="section-title">Produções em Vídeo</h2>
-    </div>
-  </div>
-
-  <div class="videos-grid" id="videosGrid">
-    <div class="videos-empty">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-      </svg>
-      <p>Nenhum vídeo adicionado ainda.<br>Acesse o painel admin para adicionar vídeos.</p>
-    </div>
-  </div>
 </section>
 
 <!-- ABOUT -->
@@ -3030,19 +2852,24 @@
 
   function handleProjectFilesSelect(e) {
     const files = Array.from(e.target.files);
-    
-    files.forEach((file, idx) => {
-      if (!file.type.startsWith('image/')) return;
-      if (file.size > 5 * 1024 * 1024) {
-        alert(`Arquivo ${file.name} é muito grande (máximo 5MB)`);
+
+    files.forEach(file => {
+      const isImage = file.type.startsWith('image/');
+      const isVideo = file.type.startsWith('video/');
+      if (!isImage && !isVideo) return;
+
+      if (file.size > 100 * 1024 * 1024) {
+        alert(`Arquivo ${file.name} é muito grande (máximo 100MB)`);
         return;
       }
 
       const reader = new FileReader();
       reader.onload = function(event) {
         projectsTemp.push({
+          type: isVideo ? 'video' : 'image',
           dataUrl: event.target.result,
-          fileName: file.name
+          fileName: file.name,
+          mimeType: file.type
         });
         renderProjectImagesPreview();
       };
@@ -3052,9 +2879,15 @@
 
   function renderProjectImagesPreview() {
     const preview = document.getElementById('projectImagesPreview');
-    preview.innerHTML = projectsTemp.map((img, idx) => `
+    preview.innerHTML = projectsTemp.map((item, idx) => `
       <div class="preview-img-item">
-        <img src="${img.dataUrl}" alt=""/>
+        ${item.type === 'video'
+          ? `<video src="${item.dataUrl}" style="width:100%;height:70px;object-fit:cover;display:block;"></video>
+             <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+               <span style="font-size:1.4rem;filter:drop-shadow(0 1px 3px #000);">▶</span>
+             </div>`
+          : `<img src="${item.dataUrl}" alt=""/>`
+        }
         <div class="preview-img-remove" onclick="removeProjectImage(${idx})">×</div>
       </div>
     `).join('');
@@ -3067,9 +2900,9 @@
 
   function saveProject(e) {
     e.preventDefault();
-    
+
     if (projectsTemp.length === 0) {
-      alert('Adicione pelo menos uma imagem ao projeto');
+      alert('Adicione pelo menos uma foto ou vídeo ao projeto');
       return;
     }
 
@@ -3079,6 +2912,10 @@
     const category = document.getElementById('projCategory').value;
     const desc = document.getElementById('projDesc').value;
 
+    // thumbnail: primeira imagem se existir, senão primeiro vídeo
+    const firstImage = projectsTemp.find(m => m.type === 'image');
+    const thumbnail = firstImage ? firstImage.dataUrl : projectsTemp[0].dataUrl;
+
     const project = {
       id: Date.now(),
       title,
@@ -3086,8 +2923,8 @@
       location,
       category,
       description: desc,
-      thumbnail: projectsTemp[0].dataUrl,
-      images: projectsTemp.map(img => img.dataUrl)
+      thumbnail,
+      media: projectsTemp.map(m => ({ type: m.type, dataUrl: m.dataUrl, mimeType: m.mimeType, fileName: m.fileName }))
     };
 
     let projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
@@ -3105,26 +2942,36 @@
   function loadProjects() {
     const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
     const list = document.getElementById('projectsList');
-    
+
     if (projects.length === 0) {
       list.innerHTML = '<p style="color: var(--muted); font-size: 0.85rem;">Nenhum projeto ainda.</p>';
       return;
     }
 
-    list.innerHTML = projects.map((proj, idx) => `
-      <div class="project-item">
-        <img src="${proj.thumbnail}" alt="" class="project-item-thumb"/>
-        <div class="project-item-info">
-          <h4>${proj.title}</h4>
-          <p>${proj.date} • ${proj.location}</p>
-          <p>${proj.images.length} foto${proj.images.length > 1 ? 's' : ''}</p>
+    list.innerHTML = projects.map((proj, idx) => {
+      const media = proj.media || proj.images?.map(d => ({ type: 'image', dataUrl: d })) || [];
+      const imgCount = media.filter(m => m.type === 'image').length;
+      const vidCount = media.filter(m => m.type === 'video').length;
+      const counts = [imgCount && `${imgCount} foto${imgCount > 1 ? 's' : ''}`, vidCount && `${vidCount} vídeo${vidCount > 1 ? 's' : ''}`].filter(Boolean).join(' · ');
+      const thumb = proj.thumbnail || (media[0] && media[0].dataUrl) || '';
+      return `
+        <div class="project-item">
+          ${proj.media?.find(m => m.type === 'video') && !proj.media?.find(m => m.type === 'image')
+            ? `<div class="project-item-thumb" style="background:var(--slate);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">▶</div>`
+            : `<img src="${thumb}" alt="" class="project-item-thumb"/>`
+          }
+          <div class="project-item-info">
+            <h4>${proj.title}</h4>
+            <p>${proj.date} • ${proj.location}</p>
+            <p>${counts}</p>
+          </div>
+          <div class="project-item-actions">
+            <button class="project-item-btn" onclick="editProject(${idx})">Editar</button>
+            <button class="project-item-btn" onclick="deleteProject(${idx})">Deletar</button>
+          </div>
         </div>
-        <div class="project-item-actions">
-          <button class="project-item-btn" onclick="editProject(${idx})">Editar</button>
-          <button class="project-item-btn" onclick="deleteProject(${idx})">Deletar</button>
-        </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   function editProject(idx) {
@@ -3140,10 +2987,15 @@
     loadProjects();
   }
 
+  function getProjectMedia(project) {
+    // compatibilidade com projetos antigos que usavam `images`
+    if (project.media) return project.media;
+    return (project.images || []).map(d => ({ type: 'image', dataUrl: d, mimeType: 'image/jpeg' }));
+  }
+
   function openProjectModal(projectId) {
     const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
     const project = projects.find(p => p.id === projectId);
-    
     if (!project) return;
 
     currentProjectIndex = projectId;
@@ -3155,7 +3007,8 @@
     document.getElementById('projectCategory').textContent = project.category.toUpperCase();
     document.getElementById('projectDesc').textContent = project.description;
 
-    document.getElementById('totalImgNum').textContent = project.images.length;
+    const media = getProjectMedia(project);
+    document.getElementById('totalImgNum').textContent = media.length;
     renderGallery(project);
 
     document.getElementById('projectModal').classList.add('open');
@@ -3166,30 +3019,41 @@
   }
 
   function renderGallery(project) {
-    const mainImg = document.getElementById('galleryMainImg');
+    const mediaBox = document.getElementById('galleryMainMedia');
     const thumbs = document.getElementById('galleryThumbnails');
+    const media = getProjectMedia(project);
+    const current = media[currentGalleryImageIndex];
 
-    mainImg.src = project.images[currentGalleryImageIndex];
     document.getElementById('currentImgNum').textContent = currentGalleryImageIndex + 1;
 
-    thumbs.innerHTML = project.images.map((img, idx) => `
-      <img src="${img}" alt="" class="${idx === currentGalleryImageIndex ? 'active' : ''}" onclick="goToGalleryImage(${idx})"/>
-    `).join('');
+    if (current.type === 'video') {
+      mediaBox.innerHTML = `<video src="${current.dataUrl}" controls autoplay style="width:100%;height:100%;object-fit:contain;"></video>`;
+    } else {
+      mediaBox.innerHTML = `<img src="${current.dataUrl}" alt="" style="width:100%;height:100%;object-fit:contain;"/>`;
+    }
+
+    thumbs.innerHTML = media.map((item, idx) => {
+      const active = idx === currentGalleryImageIndex ? 'active' : '';
+      if (item.type === 'video') {
+        return `<div onclick="goToGalleryImage(${idx})" style="width:80px;height:80px;flex-shrink:0;cursor:pointer;border-radius:2px;border:2px solid ${active ? 'var(--purple)' : 'transparent'};background:var(--slate);display:flex;align-items:center;justify-content:center;font-size:1.8rem;transition:all 0.2s;">▶</div>`;
+      }
+      return `<img src="${item.dataUrl}" alt="" class="${active}" onclick="goToGalleryImage(${idx})" style="width:80px;height:80px;object-fit:cover;border-radius:2px;cursor:pointer;border:2px solid ${active ? 'var(--purple)' : 'transparent'};transition:all 0.2s;flex-shrink:0;"/>`;
+    }).join('');
   }
 
   function prevGalleryImage() {
     const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
     const project = projects.find(p => p.id === currentProjectIndex);
-    
-    currentGalleryImageIndex = (currentGalleryImageIndex - 1 + project.images.length) % project.images.length;
+    const media = getProjectMedia(project);
+    currentGalleryImageIndex = (currentGalleryImageIndex - 1 + media.length) % media.length;
     renderGallery(project);
   }
 
   function nextGalleryImage() {
     const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
     const project = projects.find(p => p.id === currentProjectIndex);
-    
-    currentGalleryImageIndex = (currentGalleryImageIndex + 1) % project.images.length;
+    const media = getProjectMedia(project);
+    currentGalleryImageIndex = (currentGalleryImageIndex + 1) % media.length;
     renderGallery(project);
   }
 
@@ -3495,120 +3359,9 @@
     }
   }
 
-  // ── VIDEOS MANAGEMENT ──
-  function getVideoEmbedUrl(url) {
-    try {
-      const u = new URL(url);
-      // YouTube
-      if (u.hostname.includes('youtube.com')) {
-        const id = u.searchParams.get('v');
-        return id ? `https://www.youtube.com/embed/${id}` : null;
-      }
-      if (u.hostname.includes('youtu.be')) {
-        const id = u.pathname.slice(1);
-        return id ? `https://www.youtube.com/embed/${id}` : null;
-      }
-      // Vimeo
-      if (u.hostname.includes('vimeo.com')) {
-        const id = u.pathname.split('/').filter(Boolean).pop();
-        return id ? `https://player.vimeo.com/video/${id}` : null;
-      }
-    } catch {}
-    return null;
-  }
-
-  function showVideosTab() {
-    document.querySelectorAll('.projects-tab-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.projects-tab').forEach(el => el.classList.remove('active'));
-    document.getElementById('tabVideos').classList.add('active');
-    document.querySelectorAll('.projects-tab')[5].classList.add('active');
-    renderVideosAdminList();
-  }
-
-  function saveVideo(e) {
-    e.preventDefault();
-    const url = document.getElementById('videoUrl').value.trim();
-    const title = document.getElementById('videoTitle').value.trim();
-    const desc = document.getElementById('videoDesc').value.trim();
-
-    const embedUrl = getVideoEmbedUrl(url);
-    if (!embedUrl) {
-      alert('❌ URL inválida. Use links do YouTube (watch?v=...) ou Vimeo.');
-      return;
-    }
-
-    let videos = JSON.parse(sessionStorage.getItem('site_videos') || '[]');
-    videos.push({ id: Date.now(), url, embedUrl, title, desc });
-    sessionStorage.setItem('site_videos', JSON.stringify(videos));
-
-    e.target.reset();
-    renderVideosAdminList();
-    renderVideosSection();
-    alert('✓ Vídeo adicionado com sucesso!');
-  }
-
-  function deleteVideo(id) {
-    if (!confirm('Remover este vídeo do site?')) return;
-    let videos = JSON.parse(sessionStorage.getItem('site_videos') || '[]');
-    videos = videos.filter(v => v.id !== id);
-    sessionStorage.setItem('site_videos', JSON.stringify(videos));
-    renderVideosAdminList();
-    renderVideosSection();
-  }
-
-  function renderVideosAdminList() {
-    const videos = JSON.parse(sessionStorage.getItem('site_videos') || '[]');
-    const list = document.getElementById('videosAdminList');
-    if (!list) return;
-    if (videos.length === 0) {
-      list.innerHTML = '<p style="color:var(--muted);font-size:0.8rem;margin-top:0.5rem;">Nenhum vídeo adicionado ainda.</p>';
-      return;
-    }
-    list.innerHTML = videos.map(v => `
-      <div class="video-admin-item">
-        <div class="video-admin-item-info">
-          <strong>${v.title}</strong>
-          <span>${v.url}</span>
-        </div>
-        <button class="project-item-btn" onclick="deleteVideo(${v.id})">Remover</button>
-      </div>
-    `).join('');
-  }
-
-  function renderVideosSection() {
-    const videos = JSON.parse(sessionStorage.getItem('site_videos') || '[]');
-    const grid = document.getElementById('videosGrid');
-    if (!grid) return;
-    if (videos.length === 0) {
-      grid.innerHTML = `
-        <div class="videos-empty">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-          </svg>
-          <p>Nenhum vídeo adicionado ainda.<br>Acesse o painel admin para adicionar vídeos.</p>
-        </div>`;
-      return;
-    }
-    grid.innerHTML = videos.map(v => `
-      <div class="video-card reveal">
-        <div class="video-embed">
-          <iframe src="${v.embedUrl}" allowfullscreen loading="lazy" title="${v.title}"></iframe>
-        </div>
-        <div class="video-info">
-          <h4>${v.title}</h4>
-          ${v.desc ? `<p>${v.desc}</p>` : ''}
-        </div>
-      </div>
-    `).join('');
-
-    // Re-observar elementos reveal novos
-    grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  }
-
   window.addEventListener('load', () => {
     checkAdminStatus();
     loadProjects();
-    renderVideosSection();
 
     // Carregar imagem da seção Sobre se existir
     const aboutImage = sessionStorage.getItem('about_image');
