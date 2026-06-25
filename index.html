@@ -988,8 +988,8 @@
     }
     .footer-section { width: 100%; }
 
-    /* ADMIN PANELS */
-    .admin-panel, .admin-projects-panel { 
+    /* ADMIN PANEL */
+    .admin-projects-panel {
       position: fixed;
       bottom: 0;
       left: 0;
@@ -1000,7 +1000,7 @@
       border-radius: 0;
       padding: 1rem;
     }
-    .admin-content, .admin-projects-content {
+    .admin-projects-content {
       max-height: 90vh;
       overflow-y: auto;
       padding: 1rem;
@@ -1290,169 +1290,6 @@
     .contact-methods { gap: var(--sp-5); }
   }
 
-  /* ── ADMIN PANEL ── */
-  .admin-panel {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 1000;
-    display: none;
-  }
-  .admin-panel.show {
-    display: block;
-  }
-
-  .admin-content {
-    position: absolute;
-    bottom: 4.5rem;
-    right: 0;
-    background: var(--slate);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 2rem;
-    max-width: 420px;
-    max-height: 70vh;
-    overflow-y: auto;
-    display: block;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-  }
-
-  .admin-content h3 {
-    color: var(--white);
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.05em;
-  }
-  .admin-content > p {
-    color: var(--muted);
-    font-size: 0.8rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .admin-items {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  .admin-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .admin-item label {
-    color: var(--white);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    font-weight: 500;
-  }
-  .admin-input {
-    background: var(--carbon);
-    border: 1px solid rgba(124,58,237,0.2);
-    border-bottom: 1px solid rgba(124,58,237,0.4);
-    color: var(--white);
-    padding: 0.6rem;
-    font-family: 'Inter', mono;
-    font-size: 0.7rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .admin-input:focus {
-    border-bottom-color: var(--purple);
-  }
-  .admin-item button {
-    background: var(--purple);
-    color: var(--black);
-    border: none;
-    padding: 0.55rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .admin-item button:hover {
-    background: var(--purple-light);
-  }
-
-  /* ── FILE UPLOAD ── */
-  .file-upload {
-    position: relative;
-    border: 2px dashed rgba(124,58,237,0.3);
-    border-radius: 4px;
-    padding: 2rem 1rem;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.25s;
-    background: rgba(124,58,237,0.02);
-    min-height: 120px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .file-upload:hover {
-    border-color: var(--purple);
-    background: rgba(124,58,237,0.05);
-  }
-  .file-upload.dragover {
-    border-color: var(--purple);
-    background: rgba(124,58,237,0.1);
-    transform: scale(1.02);
-  }
-
-  .file-upload input {
-    display: none;
-  }
-
-  .upload-prompt {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-    pointer-events: none;
-  }
-  .upload-prompt svg {
-    width: 32px;
-    height: 32px;
-    color: var(--purple);
-    opacity: 0.6;
-  }
-  .upload-prompt p {
-    color: var(--muted);
-    font-size: 0.75rem;
-    line-height: 1.4;
-  }
-
-  .upload-preview {
-    width: 100%;
-    margin-top: 1rem;
-  }
-  .upload-preview img {
-    width: 100%;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 2px;
-    border: 1px solid var(--border);
-  }
-  .upload-preview .preview-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 0.5rem;
-    font-size: 0.7rem;
-    color: var(--muted);
-  }
-  .upload-preview .remove-btn {
-    background: none;
-    border: none;
-    color: #ff6b6b;
-    cursor: pointer;
-    padding: 0;
-    font-size: 0.8rem;
-    transition: color 0.2s;
-  }
   /* ── PROJECT MODAL ── */
   .project-modal {
     position: fixed;
@@ -2097,11 +1934,6 @@
   </ul>
   <div class="nav-actions">
     <a href="#contato" class="nav-cta">Orçamento</a>
-    <button class="nav-admin-btn" title="Config. Site" onclick="toggleAdminPanel()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-      </svg>
-    </button>
     <button class="nav-admin-btn" title="Projetos" onclick="toggleAdminProjects()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
@@ -2446,113 +2278,6 @@
   </div>
 </div>
 
-<!-- ADMIN PANEL -->
-<div class="admin-panel" id="adminPanel">
-  <div class="admin-content">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-      <h3>Configurar Portfólio</h3>
-      <button onclick="closeAdminPanel()" style="background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.8rem; padding: 0; line-height: 1; transition: color 0.2s;" onmouseover="this.style.color='var(--purple)'" onmouseout="this.style.color='var(--muted)'">×</button>
-    </div>
-    <p>Adicione as URLs das suas imagens:</p>
-    <div class="admin-items">
-      <div class="admin-item">
-        <label>Item 1 - Clipe Institucional (Vídeo)</label>
-        <div class="file-upload" id="upload1" ondrop="handleDrop(event, 1)" ondragover="handleDragOver(event)">
-          <input type="file" id="file1" accept="image/*" onchange="handleFileSelect(event, 1)"/>
-          <div class="upload-prompt">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-            <p>Arraste a imagem aqui ou clique para selecionar</p>
-          </div>
-          <div class="upload-preview" id="preview1"></div>
-        </div>
-      </div>
-
-      <div class="admin-item">
-        <label>Item 2 - Ensaio de Produto (Foto)</label>
-        <div class="file-upload" id="upload2" ondrop="handleDrop(event, 2)" ondragover="handleDragOver(event)">
-          <input type="file" id="file2" accept="image/*" onchange="handleFileSelect(event, 2)"/>
-          <div class="upload-prompt">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-            <p>Arraste a imagem aqui ou clique para selecionar</p>
-          </div>
-          <div class="upload-preview" id="preview2"></div>
-        </div>
-      </div>
-
-      <div class="admin-item">
-        <label>Item 3 - Retrato Profissional (Foto)</label>
-        <div class="file-upload" id="upload3" ondrop="handleDrop(event, 3)" ondragover="handleDragOver(event)">
-          <input type="file" id="file3" accept="image/*" onchange="handleFileSelect(event, 3)"/>
-          <div class="upload-prompt">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-            <p>Arraste a imagem aqui ou clique para selecionar</p>
-          </div>
-          <div class="upload-preview" id="preview3"></div>
-        </div>
-      </div>
-
-      <div class="admin-item">
-        <label>Item 4 - Festival Verão SC (Evento)</label>
-        <div class="file-upload" id="upload4" ondrop="handleDrop(event, 4)" ondragover="handleDragOver(event)">
-          <input type="file" id="file4" accept="image/*" onchange="handleFileSelect(event, 4)"/>
-          <div class="upload-prompt">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-            <p>Arraste a imagem aqui ou clique para selecionar</p>
-          </div>
-          <div class="upload-preview" id="preview4"></div>
-        </div>
-      </div>
-
-      <div class="admin-item">
-        <label>Item 5 - Reel de Marca (Vídeo)</label>
-        <div class="file-upload" id="upload5" ondrop="handleDrop(event, 5)" ondragover="handleDragOver(event)">
-          <input type="file" id="file5" accept="image/*" onchange="handleFileSelect(event, 5)"/>
-          <div class="upload-prompt">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-            <p>Arraste a imagem aqui ou clique para selecionar</p>
-          </div>
-          <div class="upload-preview" id="preview5"></div>
-        </div>
-      </div>
-
-      <div class="admin-item">
-        <label>Item 6 - Cobertura Corporativa (Evento)</label>
-        <div class="file-upload" id="upload6" ondrop="handleDrop(event, 6)" ondragover="handleDragOver(event)">
-          <input type="file" id="file6" accept="image/*" onchange="handleFileSelect(event, 6)"/>
-          <div class="upload-prompt">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-            <p>Arraste a imagem aqui ou clique para selecionar</p>
-          </div>
-          <div class="upload-preview" id="preview6"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 </section>
 
 <!-- ABOUT -->
@@ -2845,212 +2570,49 @@
   });
 
   // Admin Panel - Autenticação
-  const ADMIN_PASSWORD = 'admin123'; // MUDE ISSO para sua senha!
-  
-  function checkAdminStatus() {
-    const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
-    
-    if (isLoggedIn === 'true') {
-      loadSavedImages();
-    }
+  // SHA-256 de 'admin123' — para trocar a senha, gere o hash da nova senha com
+  // crypto.subtle e substitua este valor
+  const ADMIN_PASSWORD_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9';
+
+  async function hashPassword(pwd) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
   }
 
-  function handleLogin(e) {
+  function checkAdminStatus() {
+    // sessionStorage mantém sessão do admin enquanto a aba estiver aberta
+  }
+
+  async function handleLogin(e) {
     e.preventDefault();
     const password = document.getElementById('adminPass').value;
     const errorMsg = document.getElementById('loginError');
-    
-    if (password === ADMIN_PASSWORD) {
+
+    const hash = await hashPassword(password);
+    if (hash === ADMIN_PASSWORD_HASH) {
       sessionStorage.setItem('adminLoggedIn', 'true');
       document.getElementById('loginOverlay').classList.remove('show');
       document.getElementById('adminPass').value = '';
-      checkAdminStatus();
-      // Mostra o painel de admin após login bem-sucedido
-      document.getElementById('adminPanel').classList.add('show');
+      document.getElementById('adminProjectsPanel').classList.add('show');
     } else {
       errorMsg.classList.add('show');
-      setTimeout(() => {
-        errorMsg.classList.remove('show');
-      }, 3000);
+      setTimeout(() => errorMsg.classList.remove('show'), 3000);
     }
   }
 
   function handleLogout() {
     sessionStorage.removeItem('adminLoggedIn');
-    checkAdminStatus();
-    document.getElementById('adminPanel').classList.remove('show');
+    document.getElementById('adminProjectsPanel').classList.remove('show');
   }
 
 
- function toggleAdminPanel() {
-   const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
-  const panel = document.getElementById('adminPanel');
-  
-  if (isLoggedIn !== 'true') {
-    document.getElementById('loginOverlay').classList.add('show');
-    document.getElementById('adminPass').focus();
-    return;
-  }
-  
 
-  panel.classList.toggle('show');
-}
-  
 
   function handleDragOver(e) {
     e.preventDefault();
     e.stopPropagation();
     const uploadDiv = e.currentTarget;
     uploadDiv.classList.add('dragover');
-  }
-
-  function handleDrop(e, itemNum) {
-    e.preventDefault();
-    e.stopPropagation();
-    const uploadDiv = e.currentTarget;
-    uploadDiv.classList.remove('dragover');
-    
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      processFile(files[0], itemNum);
-    }
-  }
-
-  function handleFileSelect(e, itemNum) {
-    const files = e.target.files;
-    if (files.length > 0) {
-      processFile(files[0], itemNum);
-    }
-  }
-
-  function processFile(file, itemNum) {
-    // Validar se é imagem
-    if (!file.type.startsWith('image/')) {
-      alert('Por favor, selecione uma imagem (JPG, PNG, etc)');
-      return;
-    }
-
-    // Validar tamanho (máximo 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Imagem muito grande! Máximo 5MB');
-      return;
-    }
-
-    // Ler arquivo como Data URL
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const dataUrl = e.target.result;
-      updateImageFromFile(dataUrl, file.name, itemNum);
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function updateImageFromFile(dataUrl, fileName, itemNum) {
-    const uploadDiv = document.getElementById(`upload${itemNum}`);
-    const uploadPrompt = uploadDiv.querySelector('.upload-prompt');
-    const preview = uploadDiv.querySelector('.upload-preview');
-
-    // Mostrar preview
-    preview.innerHTML = `
-      <img src="${dataUrl}" alt="Preview"/>
-      <div class="preview-info">
-        <span>${fileName}</span>
-        <button class="remove-btn" onclick="removeImage(${itemNum})">Remover</button>
-      </div>
-    `;
-    uploadPrompt.style.display = 'none';
-
-    // Aplicar imagem ao portfólio
-    const item = document.querySelectorAll('.portfolio-item')[itemNum - 1];
-    let img = item.querySelector('.portfolio-img');
-    
-    if (!img) {
-      img = document.createElement('img');
-      img.className = 'portfolio-img';
-      item.insertBefore(img, item.firstChild);
-    }
-    
-    img.src = dataUrl;
-    img.alt = `Projeto ${itemNum}`;
-
-    // Salvar em localStorage
-    localStorage.setItem(`portfolio_img_${itemNum}`, dataUrl);
-
-    // Feedback visual
-    setTimeout(() => {
-      const prompt = document.getElementById(`upload${itemNum}`).querySelector('.upload-prompt');
-      if (prompt) {
-        prompt.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg><p>✓ Imagem carregada com sucesso!</p>';
-        prompt.style.display = 'flex';
-        prompt.style.color = 'var(--purple)';
-      }
-    }, 500);
-
-    setTimeout(() => {
-      const prompt = document.getElementById(`upload${itemNum}`).querySelector('.upload-prompt');
-      if (prompt) {
-        prompt.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg><p>Arraste a imagem aqui ou clique para selecionar</p>';
-        prompt.style.display = 'flex';
-        prompt.style.color = '';
-      }
-    }, 2000);
-  }
-
-  function removeImage(itemNum) {
-    const uploadDiv = document.getElementById(`upload${itemNum}`);
-    const uploadPrompt = uploadDiv.querySelector('.upload-prompt');
-    const preview = uploadDiv.querySelector('.upload-preview');
-    const fileInput = uploadDiv.querySelector('input[type="file"]');
-
-    // Limpar preview
-    preview.innerHTML = '';
-    uploadPrompt.style.display = 'flex';
-    fileInput.value = '';
-
-    // Remover imagem do portfólio
-    const item = document.querySelectorAll('.portfolio-item')[itemNum - 1];
-    const img = item.querySelector('.portfolio-img');
-    if (img) img.remove();
-
-    // Remover de localStorage
-    localStorage.removeItem(`portfolio_img_${itemNum}`);
-  }
-
-  function loadSavedImages() {
-    for (let i = 1; i <= 6; i++) {
-      const saved = localStorage.getItem(`portfolio_img_${i}`);
-      if (saved) {
-        // Aplicar ao portfólio
-        const item = document.querySelectorAll('.portfolio-item')[i - 1];
-        if (!item) continue;
-        let img = item.querySelector('.portfolio-img');
-        
-        if (!img) {
-          img = document.createElement('img');
-          img.className = 'portfolio-img';
-          item.insertBefore(img, item.firstChild);
-        }
-        
-        img.src = saved;
-        img.alt = `Projeto ${i}`;
-
-        // Mostrar preview no painel
-        const uploadDiv = document.getElementById(`upload${i}`);
-        if (uploadDiv) {
-          const uploadPrompt = uploadDiv.querySelector('.upload-prompt');
-          const preview = uploadDiv.querySelector('.upload-preview');
-          
-          preview.innerHTML = `
-            <img src="${saved}" alt="Preview"/>
-            <div class="preview-info">
-              <span>Imagem carregada</span>
-              <button class="remove-btn" onclick="removeImage(${i})">Remover</button>
-            </div>
-          `;
-          uploadPrompt.style.display = 'none';
-        }
-      }
-    }
   }
 
   // Fechar modal ao clicar fora
@@ -3065,6 +2627,7 @@
   let currentGalleryImageIndex = 0;
   let projectsTemp = [];
   let activeFilter = 'all';
+  let editingProjectId = null;
 
   function toggleAdminProjects() {
     const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
@@ -3083,23 +2646,24 @@
     document.getElementById('adminProjectsPanel').classList.remove('show');
   }
 
-  function closeAdminPanel() {
-    document.getElementById('adminPanel').classList.remove('show');
-  }
-
   function showProjectsTab(tab) {
     document.querySelectorAll('.projects-tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.projects-tab').forEach(el => el.classList.remove('active'));
-    
+
     if (tab === 'list') {
       document.getElementById('tabList').classList.add('active');
       document.querySelectorAll('.projects-tab')[0].classList.add('active');
     } else {
       document.getElementById('tabCreate').classList.add('active');
       document.querySelectorAll('.projects-tab')[1].classList.add('active');
-      document.getElementById('projectForm').reset();
-      document.getElementById('projectImagesPreview').innerHTML = '';
-      projectsTemp = [];
+      // só reseta o form se não estiver vindo de editProject()
+      if (editingProjectId === null) {
+        document.getElementById('projectForm').reset();
+        document.getElementById('projectImagesPreview').innerHTML = '';
+        projectsTemp = [];
+      }
+      document.querySelector('#projectForm .form-submit').textContent =
+        editingProjectId !== null ? 'Salvar Alterações' : 'Salvar Projeto';
     }
   }
 
@@ -3188,16 +2752,29 @@
     };
 
     let projects = JSON.parse(localStorage.getItem('projects') || '[]');
-    projects.push(project);
+
+    if (editingProjectId !== null) {
+      const idx = projects.findIndex(p => p.id === editingProjectId);
+      if (idx !== -1) {
+        project.id = editingProjectId;
+        projects[idx] = project;
+      }
+      editingProjectId = null;
+    } else {
+      projects.push(project);
+    }
+
     try {
       localStorage.setItem('projects', JSON.stringify(projects));
     } catch (err) {
       alert('❌ Erro ao salvar: arquivos muito grandes para o armazenamento local. Tente imagens menores ou reduza a quantidade de vídeos.');
+      editingProjectId = null;
       return;
     }
 
     alert('✓ Projeto salvo com sucesso!');
     document.getElementById('projectForm').reset();
+    document.querySelector('#projectForm .form-submit').textContent = 'Salvar Projeto';
     projectsTemp = [];
     document.getElementById('projectImagesPreview').innerHTML = '';
     showProjectsTab('list');
@@ -3241,7 +2818,31 @@
   }
 
   function editProject(idx) {
-    alert('Edição em desenvolvimento');
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+    const proj = projects[idx];
+    if (!proj) return;
+
+    editingProjectId = proj.id;
+    projectsTemp = (proj.media || []).map(m => ({ ...m }));
+
+    showProjectsTab('create');
+
+    document.getElementById('projTitle').value = proj.title || '';
+    document.getElementById('projLocation').value = proj.location || '';
+    document.getElementById('projCategory').value = proj.category || 'foto';
+    document.getElementById('projDesc').value = proj.description || '';
+
+    // converte "DD/MM/AAAA" de volta para "AAAA-MM-DD" (formato do input[type=date])
+    if (proj.date && proj.date !== '-') {
+      const parts = proj.date.split('/');
+      if (parts.length === 3) {
+        document.getElementById('projDate').value = `${parts[2]}-${parts[1]}-${parts[0]}`;
+      }
+    } else {
+      document.getElementById('projDate').value = '';
+    }
+
+    renderProjectImagesPreview();
   }
 
   function deleteProject(idx) {
