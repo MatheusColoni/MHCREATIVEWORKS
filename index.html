@@ -2607,16 +2607,21 @@
     document.getElementById('adminPanel').classList.remove('show');
   }
 
-  function toggleAdminPanel() {
-    const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
-    
-    if (isLoggedIn !== 'true') {
-      // Mostra o overlay de login
-      document.getElementById('loginOverlay').classList.add('show');
-      document.getElementById('adminPass').focus();
-      return;
-    }
+
+ function toggleAdminPanel() {
+   const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
+  const panel = document.getElementById('adminPanel');
+  
+  if (isLoggedIn !== 'true') {
+    document.getElementById('loginOverlay').classList.add('show');
+    document.getElementById('adminPass').focus();
+    return;
   }
+  
+
+  panel.classList.toggle('show');
+}
+  
 
   function handleDragOver(e) {
     e.preventDefault();
