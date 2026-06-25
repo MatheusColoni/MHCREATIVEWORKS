@@ -1413,86 +1413,134 @@
   .project-modal {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.95);
+    background: rgba(0,0,0,0.88);
+    backdrop-filter: blur(6px);
     display: none;
     align-items: center;
     justify-content: center;
     z-index: 3000;
-    padding: 1rem;
+    padding: 1.5rem;
     overflow-y: auto;
   }
-  .project-modal.open {
-    display: flex;
-  }
+  .project-modal.open { display: flex; }
 
   .project-modal-content {
-    background: var(--slate);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 3rem;
-    max-width: 900px;
+    background: linear-gradient(160deg, #161616 0%, var(--slate) 100%);
+    border: 1px solid transparent;
+    background-clip: padding-box;
+    border-radius: 6px;
+    padding: 2.5rem 2.8rem 2.8rem;
+    max-width: 860px;
     width: 100%;
     position: relative;
-    max-height: 90vh;
+    max-height: 92vh;
     overflow-y: auto;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(124,58,237,0.18);
+    animation: modalIn 0.3s cubic-bezier(.25,.8,.25,1);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0)  scale(1); }
   }
 
+  /* Close button */
   .modal-close {
     position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    background: none;
-    border: none;
+    top: 1.2rem; right: 1.2rem;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
     color: var(--muted);
-    font-size: 2rem;
     cursor: pointer;
-    transition: color 0.2s;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    padding: 0;
   }
   .modal-close:hover {
-    color: var(--purple);
+    background: rgba(124,58,237,0.15);
+    border-color: var(--purple);
+    color: var(--purple-light);
   }
+  .modal-close svg { width: 14px; height: 14px; }
 
+  /* Header */
   .project-header {
-    margin-bottom: 2rem;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 2rem;
-  }
-  .project-header h2 {
-    color: var(--white);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.2rem;
-    letter-spacing: 0.05em;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
+    padding-bottom: 1.8rem;
+    border-bottom: 1px solid transparent;
+    background:
+      linear-gradient(var(--slate), var(--slate)) padding-box,
+      var(--grad-border) border-box;
+    background-clip: padding-box, border-box;
+    border-bottom: 1px solid;
+    border-image: var(--grad-border) 1;
   }
 
+  .project-header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    background: linear-gradient(120deg, var(--white) 0%, var(--purple-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+  }
+
+  .proj-cat-badge {
+    flex-shrink: 0;
+    font-size: var(--fs-2xs);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--purple-light);
+    border: 1px solid transparent;
+    background:
+      rgba(124,58,237,0.12) padding-box,
+      var(--grad-border) border-box;
+    padding: 0.35rem 0.9rem;
+    border-radius: 2px;
+    white-space: nowrap;
+    margin-top: 0.3rem;
+  }
+
+  /* Meta linha horizontal */
   .project-meta {
     display: flex;
-    gap: 2.5rem;
+    align-items: center;
+    gap: 0.6rem;
     flex-wrap: wrap;
   }
-  .meta-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  .meta-label {
+  .meta-text {
     color: var(--muted);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-size: var(--fs-xs);
+    letter-spacing: var(--ls-base);
   }
-  .meta-value {
-    color: var(--white);
-    font-size: 0.95rem;
+  .meta-sep {
+    color: rgba(124,58,237,0.5);
+    font-size: 0.7rem;
   }
 
+  /* Descrição */
   .project-description {
     margin-bottom: 2rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(124,58,237,0.35);
   }
   .project-description p {
     color: var(--muted);
-    line-height: 1.8;
-    font-size: 0.9rem;
+    line-height: 1.85;
+    font-size: var(--fs-sm);
+    font-style: italic;
   }
 
   .project-gallery {
@@ -2239,28 +2287,22 @@
 <!-- PROJECT DETAIL MODAL -->
 <div class="project-modal" id="projectModal">
   <div class="project-modal-content">
-    <button class="modal-close" onclick="closeProjectModal()">&times;</button>
-    
+    <button class="modal-close" onclick="closeProjectModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
     <div class="project-header">
-      <h2 id="projectTitle">Título do Projeto</h2>
-      <div class="project-meta">
-        <div class="meta-item">
-          <span class="meta-label">📅 Data</span>
-          <span class="meta-value" id="projectDate">-</span>
-        </div>
-        <div class="meta-item">
-          <span class="meta-label">📍 Local</span>
-          <span class="meta-value" id="projectLocation">-</span>
-        </div>
-        <div class="meta-item">
-          <span class="meta-label">🏷️ Categoria</span>
-          <span class="meta-value" id="projectCategory">-</span>
-        </div>
+      <div class="project-header-row">
+        <h2 id="projectTitle"></h2>
+        <span class="proj-cat-badge" id="projectCategory"></span>
       </div>
+      <div class="project-meta" id="projectMeta"></div>
     </div>
 
-    <div class="project-description">
-      <p id="projectDesc">-</p>
+    <div class="project-description" id="projectDescWrap">
+      <p id="projectDesc"></p>
     </div>
 
     <div class="project-gallery">
@@ -2272,10 +2314,7 @@
           <span id="currentImgNum">1</span> / <span id="totalImgNum">0</span>
         </div>
       </div>
-
-      <div class="gallery-thumbnails" id="galleryThumbnails">
-        <!-- Thumbnails aparecem aqui -->
-      </div>
+      <div class="gallery-thumbnails" id="galleryThumbnails"></div>
     </div>
   </div>
 </div>
@@ -3243,11 +3282,38 @@
     currentProjectIndex = projectId;
     currentGalleryImageIndex = 0;
 
-    document.getElementById('projectTitle').textContent = project.title;
-    document.getElementById('projectDate').textContent = project.date;
-    document.getElementById('projectLocation').textContent = project.location;
-    document.getElementById('projectCategory').textContent = project.category.toUpperCase();
-    document.getElementById('projectDesc').textContent = project.description;
+    // Título
+    document.getElementById('projectTitle').textContent = project.title || '';
+
+    // Badge de categoria
+    const catEl = document.getElementById('projectCategory');
+    if (project.category) {
+      catEl.textContent = project.category.toUpperCase();
+      catEl.style.display = '';
+    } else {
+      catEl.style.display = 'none';
+    }
+
+    // Meta: data e local — só mostra os que foram preenchidos
+    const metaEl = document.getElementById('projectMeta');
+    const parts = [];
+    const hasDate = project.date && project.date !== '-' && project.date.trim();
+    const hasLoc  = project.location && project.location.trim();
+    if (hasDate) parts.push(`<span class="meta-text">${project.date}</span>`);
+    if (hasLoc)  parts.push(`<span class="meta-text">${project.location}</span>`);
+    metaEl.innerHTML = parts.join('<span class="meta-sep">·</span>');
+    metaEl.style.display = parts.length ? '' : 'none';
+
+    // Descrição — oculta se vazia
+    const descWrap = document.getElementById('projectDescWrap');
+    const descEl   = document.getElementById('projectDesc');
+    const hasDesc  = project.description && project.description.trim();
+    if (hasDesc) {
+      descEl.textContent = project.description;
+      descWrap.style.display = '';
+    } else {
+      descWrap.style.display = 'none';
+    }
 
     const media = getProjectMedia(project);
     document.getElementById('totalImgNum').textContent = media.length;
