@@ -121,14 +121,8 @@ cd mhcreativeworks
 
 ---
 
-## 👤 Painel Admin
 
-### Acesso
-
-```
-Clique no ícone 👤 (Projetos) na navbar
-Senha: admin123
-```
+`
 
 ### Funcionalidades do Admin
 
@@ -206,115 +200,7 @@ Documentação completa disponível em `docs/`:
 
 ---
 
-## 🔧 Configuração
 
-### Mudar Senha do Admin
-
-No arquivo `index.html`, procure por:
-
-```javascript
-const ADMIN_PASSWORD = 'admin123';
-```
-
-Altere para sua senha:
-
-```javascript
-const ADMIN_PASSWORD = 'sua-nova-senha';
-```
-
-### Mudar Número do WhatsApp
-
-Procure por:
-
-```javascript
-const whatsappNumber = '5548991896090';
-```
-
-Altere para:
-
-```javascript
-const whatsappNumber = '55SEU_DDD_SEU_NUMERO';
-```
-
-### Mudar Links de Redes Sociais
-
-No HTML, procure por `instagram.com/mh_creativeworks` e altere conforme necessário.
-
----
-
-## 🐛 Problemas Conhecidos e Soluções
-
-| Problema | Solução |
-|----------|---------|
-| Dados não salvam | SessionStorage é perdido ao fechar aba |
-| Admin não funciona | Limpe cache (Ctrl+Shift+Del) |
-| Imagens não aparecem | Recarregue a página (F5) |
-
----
-
-## 📈 Roadmap
-
-Funcionalidades planejadas:
-
-- [ ] Backend com Node.js
-- [ ] Banco de dados persistente
-- [ ] Autenticação segura
-- [ ] Sistema de pagamento
-- [ ] Chat em tempo real
-- [ ] Analytics avançado
-- [ ] CMS integrado
-- [ ] Multi-idiomas
-
----
-
-## 🤝 Contribuir
-
-Para contribuir com melhorias:
-
-1. Faça fork do repositório
-2. Crie uma branch: `git checkout -b feature/sua-feature`
-3. Commit suas mudanças: `git commit -m 'Adiciona feature'`
-4. Push para a branch: `git push origin feature/sua-feature`
-5. Abra um Pull Request
-
----
-
-## 📄 Licença
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo LICENSE para detalhes.
-
----
-
-## 📧 Contato
-
-- **Email**: contato@mhcreativeworks.com
-- **WhatsApp**: (48) 99189-6090
-- **Instagram**: [@mh_creativeworks](https://instagram.com/mh_creativeworks)
-
----
-
-## 🎓 Desenvolvido por
-
-Desenvolvido com ❤️ usando HTML, CSS e JavaScript puro.
-
-**Claude AI** - 2026
-
----
-
-## ⭐ Se gostou, deixe uma estrela!
-
-Se este projeto foi útil para você, considere deixar uma ⭐ no GitHub!
-
----
-
-## 📚 Referências
-
-- [MDN Web Docs](https://developer.mozilla.org)
-- [CSS Tricks](https://css-tricks.com)
-- [Vercel Documentation](https://vercel.com/docs)
-- [GitHub Guides](https://guides.github.com)
-
----
 
 **Versão**: 1.0.0  
 **Última atualização**: 25/06/2026  
