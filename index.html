@@ -356,6 +356,9 @@
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
 
   /* ── SERVICES ── */
   #servicos {
@@ -2570,6 +2573,28 @@
   });
 
   // Admin Panel - Autenticação
+  // ── CLOUDINARY ──
+  const CLOUDINARY_CLOUD  = 'db2uzyglo';
+  const CLOUDINARY_PRESET = 'default';
+
+  async function uploadToCloudinary(file) {
+    const resourceType = file.type.startsWith('video/') ? 'video' : 'image';
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_PRESET);
+
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/${resourceType}/upload`,
+      { method: 'POST', body: formData }
+    );
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error?.message || `HTTP ${res.status}`);
+    }
+    const data = await res.json();
+    return data.secure_url;
+  }
+
   // SHA-256 de 'admin123' — para trocar a senha, gere o hash da nova senha com
   // crypto.subtle e substitua este valor
   const ADMIN_PASSWORD_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9';
@@ -2674,45 +2699,58 @@
     handleProjectFilesSelect({ target: { files: files } });
   }
 
-  function handleProjectFilesSelect(e) {
+  async function handleProjectFilesSelect(e) {
     const files = Array.from(e.target.files);
 
-    files.forEach(file => {
+    for (const file of files) {
       const isImage = file.type.startsWith('image/');
       const isVideo = file.type.startsWith('video/');
-      if (!isImage && !isVideo) return;
+      if (!isImage && !isVideo) continue;
 
-      if (file.size > 100 * 1024 * 1024) {
-        alert(`Arquivo ${file.name} é muito grande (máximo 100MB)`);
-        return;
-      }
+      // insere placeholder de loading imediatamente
+      const placeholderIdx = projectsTemp.length;
+      projectsTemp.push({
+        type: isVideo ? 'video' : 'image',
+        dataUrl: null,
+        fileName: file.name,
+        mimeType: file.type,
+        uploading: true
+      });
+      renderProjectImagesPreview();
 
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        projectsTemp.push({
+      try {
+        const url = await uploadToCloudinary(file);
+        projectsTemp[placeholderIdx] = {
           type: isVideo ? 'video' : 'image',
-          dataUrl: event.target.result,
+          dataUrl: url,
           fileName: file.name,
           mimeType: file.type
-        });
-        renderProjectImagesPreview();
-      };
-      reader.readAsDataURL(file);
-    });
+        };
+      } catch (err) {
+        projectsTemp.splice(placeholderIdx, 1);
+        alert(`❌ Erro ao enviar ${file.name}: ${err.message}`);
+      }
+      renderProjectImagesPreview();
+    }
   }
 
   function renderProjectImagesPreview() {
     const preview = document.getElementById('projectImagesPreview');
     preview.innerHTML = projectsTemp.map((item, idx) => `
       <div class="preview-img-item">
-        ${item.type === 'video'
-          ? `<video src="${item.dataUrl}" style="width:100%;height:70px;object-fit:cover;display:block;"></video>
-             <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
-               <span style="font-size:1.4rem;filter:drop-shadow(0 1px 3px #000);">▶</span>
+        ${item.uploading
+          ? `<div style="width:100%;height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--slate);gap:0.4rem;">
+               <div style="width:28px;height:28px;border:2px solid var(--purple);border-top-color:transparent;border-radius:50%;animation:spin 0.7s linear infinite;"></div>
+               <span style="font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;">ENVIANDO</span>
              </div>`
-          : `<img src="${item.dataUrl}" alt=""/>`
+          : item.type === 'video'
+            ? `<video src="${item.dataUrl}" style="width:100%;height:70px;object-fit:cover;display:block;"></video>
+               <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+                 <span style="font-size:1.4rem;filter:drop-shadow(0 1px 3px #000);">▶</span>
+               </div>`
+            : `<img src="${item.dataUrl}" alt=""/>`
         }
-        <div class="preview-img-remove" onclick="removeProjectImage(${idx})">×</div>
+        ${!item.uploading ? `<div class="preview-img-remove" onclick="removeProjectImage(${idx})">×</div>` : ''}
       </div>
     `).join('');
   }
@@ -2727,6 +2765,10 @@
 
     if (projectsTemp.length === 0) {
       alert('Adicione pelo menos uma foto ou vídeo ao projeto');
+      return;
+    }
+    if (projectsTemp.some(m => m.uploading)) {
+      alert('Aguarde o envio de todos os arquivos antes de salvar');
       return;
     }
 
@@ -3115,37 +3157,29 @@
     }
   }
 
-  function processHeroFile(file) {
-    // Validação de segurança - apenas imagens e vídeos
+  async function processHeroFile(file) {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'video/mp4', 'video/webm'];
     if (!allowedTypes.includes(file.type)) {
-      alert('❌ Tipo de arquivo inválido. Use: JPG, PNG, WebP, GIF, MP4 ou WebM');
+      alert('❌ Tipo inválido. Use: JPG, PNG, WebP, GIF, MP4 ou WebM');
       return;
     }
 
-    // Validação de tamanho (máx 10MB)
-    const maxSize = 10 * 1024 * 1024;
-    if (file.size > maxSize) {
-      alert('❌ Arquivo muito grande. Máximo: 10MB');
-      return;
-    }
+    const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+    const previewDiv = document.getElementById('heroPreview');
+    previewDiv.innerHTML = `<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:0.85rem;">
+      <div style="width:32px;height:32px;border:2px solid var(--purple);border-top-color:transparent;border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 0.8rem;"></div>
+      Enviando para a nuvem...
+    </div>`;
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const dataUrl = e.target.result;
-      
-      // Sanitizar nome do arquivo
-      const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-      
-      // Salvar no localStorage
-      localStorage.setItem('hero_media', dataUrl);
+    try {
+      const url = await uploadToCloudinary(file);
+      localStorage.setItem('hero_media', url);
       localStorage.setItem('hero_media_name', safeName);
       localStorage.setItem('hero_media_type', file.type);
-      
-      // Carregar preview
       loadHeroMedia();
-    };
-    reader.readAsDataURL(file);
+    } catch (err) {
+      previewDiv.innerHTML = `<p style="color:#ff6b6b;font-size:0.85rem;text-align:center;padding:1rem;">❌ Erro no upload: ${err.message}</p>`;
+    }
   }
 
   function loadHeroMedia() {
@@ -3227,30 +3261,28 @@
     }
   }
 
-  function processAboutFile(file) {
+  async function processAboutFile(file) {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
     if (!allowedTypes.includes(file.type)) {
       alert('❌ Tipo inválido. Use: JPG, PNG, WebP ou GIF');
       return;
     }
 
-    const maxSize = 10 * 1024 * 1024;
-    if (file.size > maxSize) {
-      alert('❌ Arquivo muito grande. Máximo: 10MB');
-      return;
-    }
+    const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+    const previewDiv = document.getElementById('aboutPreview');
+    previewDiv.innerHTML = `<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:0.85rem;">
+      <div style="width:32px;height:32px;border:2px solid var(--purple);border-top-color:transparent;border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 0.8rem;"></div>
+      Enviando para a nuvem...
+    </div>`;
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const dataUrl = e.target.result;
-      const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-      
-      localStorage.setItem('about_image', dataUrl);
+    try {
+      const url = await uploadToCloudinary(file);
+      localStorage.setItem('about_image', url);
       localStorage.setItem('about_image_name', safeName);
-      
       loadAboutImage();
-    };
-    reader.readAsDataURL(file);
+    } catch (err) {
+      previewDiv.innerHTML = `<p style="color:#ff6b6b;font-size:0.85rem;text-align:center;padding:1rem;">❌ Erro no upload: ${err.message}</p>`;
+    }
   }
 
   function loadAboutImage() {
