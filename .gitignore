@@ -1,0 +1,62 @@
+# Git Ignore - MH Creative Works
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+*.c9/
+*.sublime-workspace
+.env.local
+.env.*.local
+
+# Node (se usar no futuro)
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Build
+dist/
+build/
+*.min.js
+*.min.css
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Environment variables
+.env
+.env.production
+.env.development
+
+# Private files
+*.private
+private/
+secrets/
+
+# Backups
+*.bak
+*.backup
+
+# System
+.cache
+.DS_Store
