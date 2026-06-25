@@ -511,27 +511,71 @@
 
   .portfolio-overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%);
+    background: linear-gradient(to top,
+      rgba(0,0,0,0.92) 0%,
+      rgba(0,0,0,0.4)  40%,
+      transparent      70%);
     display: flex; align-items: flex-end;
     padding: 1.5rem;
     opacity: 0;
-    transition: opacity 0.35s;
+    transition: opacity 0.4s ease;
   }
   .portfolio-item:hover .portfolio-overlay { opacity: 1; }
 
+  .portfolio-info { width: 100%; }
+
   .portfolio-cat {
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
+    display: inline-block;
+    font-size: 0.55rem;
+    letter-spacing: var(--ls-widest);
     text-transform: uppercase;
-    color: var(--purple);
-    margin-bottom: 0.3rem;
+    color: var(--white);
+    background: rgba(124,58,237,0.82);
+    padding: 0.22rem 0.65rem;
+    border-radius: 2px;
+    margin-bottom: 0.5rem;
+    backdrop-filter: blur(4px);
   }
   .portfolio-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
-    letter-spacing: 0.05em;
+    font-size: 1.35rem;
+    letter-spacing: 0.04em;
     color: var(--white);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    line-height: 1.1;
   }
+
+  /* Badge vídeo no canto superior */
+  .portfolio-video-badge {
+    position: absolute;
+    top: 0.9rem; right: 0.9rem;
+    width: 32px; height: 32px;
+    background: rgba(124,58,237,0.82);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+    backdrop-filter: blur(4px);
+    z-index: 2;
+  }
+
+  /* Estado vazio do portfólio */
+  .portfolio-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 6rem 2rem;
+    color: var(--muted);
+    border: 1px dashed rgba(124,58,237,0.2);
+    border-radius: 4px;
+  }
+  .portfolio-empty svg {
+    width: 48px; height: 48px;
+    color: var(--purple);
+    opacity: 0.25;
+    margin-bottom: 1.2rem;
+    display: block;
+    margin-left: auto; margin-right: auto;
+  }
+  .portfolio-empty p { font-size: 0.85rem; line-height: 1.7; }
 
   /* placeholder gradients for portfolio items without images */
   .portfolio-item.p1 { background: linear-gradient(135deg, #1a1a1a 0%, #2a2218 100%); }
@@ -2217,71 +2261,7 @@
   </div>
 
   <div class="portfolio-grid" id="portfolioGrid">
-    <!-- ITEM 1 - VÍDEO GRANDE (7 colunas x 2 linhas) -->
-    <div class="portfolio-item p1" data-cat="video" onclick="openPortfolioProject(1)">
-      <img class="portfolio-img" src="https://images.unsplash.com/photo-1533928298208-27ff66555d0d?w=960&h=541&fit=crop" alt="Clipe Institucional"/>
-      <div class="portfolio-overlay">
-        <div class="portfolio-info">
-          <div class="portfolio-cat">Vídeo</div>
-          <div class="portfolio-title">Clipe Institucional</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ITEM 2 - FOTO (5 colunas x 1 linha) -->
-    <div class="portfolio-item p2" data-cat="foto" onclick="openPortfolioProject(2)">
-      <img class="portfolio-img" src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=480&h=721&fit=crop" alt="Ensaio de Produto"/>
-      <div class="portfolio-overlay">
-        <div class="portfolio-info">
-          <div class="portfolio-cat">Fotografia</div>
-          <div class="portfolio-title">Ensaio de Produto</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ITEM 3 - FOTO (5 colunas x 1 linha) -->
-    <div class="portfolio-item p3" data-cat="foto" onclick="openPortfolioProject(3)">
-      <img class="portfolio-img" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=480&h=721&fit=crop" alt="Retrato Profissional"/>
-      <div class="portfolio-overlay">
-        <div class="portfolio-info">
-          <div class="portfolio-cat">Fotografia</div>
-          <div class="portfolio-title">Retrato Profissional</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ITEM 4 - EVENTO (4 colunas x 2 linhas) -->
-    <div class="portfolio-item p4" data-cat="evento" onclick="openPortfolioProject(4)">
-      <img class="portfolio-img" src="https://images.unsplash.com/photo-1519671482677-764e0ade34bb?w=480&h=857&fit=crop" alt="Festival Verão SC"/>
-      <div class="portfolio-overlay">
-        <div class="portfolio-info">
-          <div class="portfolio-cat">Evento</div>
-          <div class="portfolio-title">Festival Verão SC</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ITEM 5 - VÍDEO (4 colunas x 2 linhas) -->
-    <div class="portfolio-item p5" data-cat="video" onclick="openPortfolioProject(5)">
-      <img class="portfolio-img" src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=480&h=857&fit=crop" alt="Reel de Marca"/>
-      <div class="portfolio-overlay">
-        <div class="portfolio-info">
-          <div class="portfolio-cat">Vídeo</div>
-          <div class="portfolio-title">Reel de Marca</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ITEM 6 - EVENTO (4 colunas x 2 linhas) -->
-    <div class="portfolio-item p6" data-cat="evento" onclick="openPortfolioProject(6)">
-      <img class="portfolio-img" src="https://images.unsplash.com/photo-1516876437184-593fda40c7ce?w=480&h=857&fit=crop" alt="Cobertura Corporativa"/>
-      <div class="portfolio-overlay">
-        <div class="portfolio-info">
-          <div class="portfolio-cat">Evento</div>
-          <div class="portfolio-title">Cobertura Corporativa</div>
-        </div>
-      </div>
-    </div>
+    <!-- preenchido dinamicamente via JS a partir dos projetos do admin -->
   </div>
 
 <!-- PROJECT DETAIL MODAL -->
@@ -3218,6 +3198,7 @@
     document.getElementById('projectImagesPreview').innerHTML = '';
     showProjectsTab('list');
     loadProjects();
+    renderPortfolioGrid();
   }
 
   function loadProjects() {
@@ -3266,6 +3247,7 @@
     projects.splice(idx, 1);
     localStorage.setItem('projects', JSON.stringify(projects));
     loadProjects();
+    renderPortfolioGrid();
   }
 
   function getProjectMedia(project) {
@@ -3372,16 +3354,66 @@
     renderGallery(project);
   }
 
-  function openPortfolioProject(itemNum) {
+  function openPortfolioProject(projectId) {
+    openProjectModal(projectId);
+  }
+
+  // padrões de span para o grid masonry (ciclam a cada 6 itens)
+  const GRID_SPANS = [
+    'grid-column:span 7;grid-row:span 2;',
+    'grid-column:span 5;grid-row:span 1;',
+    'grid-column:span 5;grid-row:span 1;',
+    'grid-column:span 4;grid-row:span 2;',
+    'grid-column:span 4;grid-row:span 2;',
+    'grid-column:span 4;grid-row:span 2;',
+  ];
+
+  function renderPortfolioGrid() {
     const projects = JSON.parse(localStorage.getItem('projects') || '[]');
-    // Encontra o projeto por ID ou número
-    const project = projects[itemNum - 1] || projects.find(p => p.id === itemNum);
-    
-    if (project) {
-      openProjectModal(project.id);
-    } else {
-      alert('Este projeto ainda não foi configurado pelo administrador');
+    const grid = document.getElementById('portfolioGrid');
+    if (!grid) return;
+
+    if (projects.length === 0) {
+      grid.innerHTML = `
+        <div class="portfolio-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <p>Nenhum projeto adicionado ainda.<br>Acesse o painel admin para criar seu portfólio.</p>
+        </div>`;
+      return;
     }
+
+    grid.innerHTML = projects.map((proj, idx) => {
+      const span   = GRID_SPANS[idx % GRID_SPANS.length];
+      const media  = proj.media || (proj.images || []).map(d => ({ type: 'image', dataUrl: d }));
+      const thumb  = proj.thumbnail || (media[0] && media[0].dataUrl) || '';
+      const hasVid = media.some(m => m.type === 'video');
+      const cat    = (proj.category || '').trim();
+      const title  = (proj.title   || '').trim();
+
+      const catLabel = { foto: 'Fotografia', video: 'Vídeo', evento: 'Evento' }[cat] || cat;
+
+      return `
+        <div class="portfolio-item" data-cat="${cat}" style="${span}" onclick="openPortfolioProject(${proj.id})">
+          ${thumb
+            ? `<img class="portfolio-img" src="${thumb}" alt="${title}"/>`
+            : ''
+          }
+          ${hasVid ? `<div class="portfolio-video-badge">▶</div>` : ''}
+          <div class="portfolio-overlay">
+            <div class="portfolio-info">
+              ${cat   ? `<div class="portfolio-cat">${catLabel}</div>`  : ''}
+              ${title ? `<div class="portfolio-title">${title}</div>` : ''}
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+
+    // reativa observer de reveal nos novos itens
+    grid.querySelectorAll('.portfolio-item').forEach(el => observer.observe(el));
   }
 
   // ── CONTACTS MANAGEMENT ──
@@ -3670,6 +3702,7 @@
   window.addEventListener('load', () => {
     checkAdminStatus();
     loadProjects();
+    renderPortfolioGrid();
 
     // Carregar imagem da seção Sobre se existir
     const aboutImage = localStorage.getItem('about_image');
