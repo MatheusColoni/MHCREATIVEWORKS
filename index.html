@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet"/>
 <style>
   :root {
+    /* ── paleta original ── */
     --black: #0a0a0a;
     --carbon: #111111;
     --slate: #1c1c1c;
@@ -20,6 +21,43 @@
     --white: #f5f3ef;
     --muted: #7a7a7a;
     --border: rgba(124, 58, 237, 0.2);
+
+    /* ── paleta expandida da marca ── */
+    --purple-deep:  #4c1d95;
+    --purple-rich:  #5b21b6;
+    --purple-pale:  #ede9fe;
+    --accent-warm:  #d97706;   /* âmbar quente como contraponto */
+
+    /* ── gradientes de marca ── */
+    --grad-brand:   linear-gradient(135deg, var(--purple-deep) 0%, var(--purple) 55%, var(--purple-light) 100%);
+    --grad-border:  linear-gradient(135deg, var(--purple-rich), var(--purple-light), var(--purple-rich));
+    --grad-shimmer: linear-gradient(105deg, transparent 35%, rgba(167,139,250,0.18) 50%, transparent 65%);
+
+    /* ── tipografia: letter-spacing refinado ── */
+    --ls-tight:   0.02em;
+    --ls-base:    0.08em;
+    --ls-wide:    0.15em;
+    --ls-wider:   0.25em;
+    --ls-widest:  0.35em;
+
+    /* ── escala harmônica de fontes (progressão × 1.25 — major third) ── */
+    --fs-2xs: 0.512rem;
+    --fs-xs:  0.64rem;
+    --fs-sm:  0.8rem;
+    --fs-md:  1.25rem;
+    --fs-lg:  1.563rem;
+    --fs-xl:  1.953rem;
+    --fs-2xl: 2.441rem;
+
+    /* ── espaçamento: proporção áurea (φ = 1.618) ── */
+    --sp-1: 0.382rem;
+    --sp-2: 0.618rem;
+    --sp-3: 1rem;
+    --sp-4: 1.618rem;
+    --sp-5: 2.618rem;
+    --sp-6: 4.236rem;
+    --sp-7: 6.854rem;
+    --sp-8: 11.09rem;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -318,6 +356,9 @@
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
 
   /* ── SERVICES ── */
   #servicos {
@@ -473,27 +514,71 @@
 
   .portfolio-overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%);
+    background: linear-gradient(to top,
+      rgba(0,0,0,0.92) 0%,
+      rgba(0,0,0,0.4)  40%,
+      transparent      70%);
     display: flex; align-items: flex-end;
     padding: 1.5rem;
     opacity: 0;
-    transition: opacity 0.35s;
+    transition: opacity 0.4s ease;
   }
   .portfolio-item:hover .portfolio-overlay { opacity: 1; }
 
+  .portfolio-info { width: 100%; }
+
   .portfolio-cat {
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
+    display: inline-block;
+    font-size: 0.55rem;
+    letter-spacing: var(--ls-widest);
     text-transform: uppercase;
-    color: var(--purple);
-    margin-bottom: 0.3rem;
+    color: var(--white);
+    background: rgba(124,58,237,0.82);
+    padding: 0.22rem 0.65rem;
+    border-radius: 2px;
+    margin-bottom: 0.5rem;
+    backdrop-filter: blur(4px);
   }
   .portfolio-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
-    letter-spacing: 0.05em;
+    font-size: 1.35rem;
+    letter-spacing: 0.04em;
     color: var(--white);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    line-height: 1.1;
   }
+
+  /* Badge vídeo no canto superior */
+  .portfolio-video-badge {
+    position: absolute;
+    top: 0.9rem; right: 0.9rem;
+    width: 32px; height: 32px;
+    background: rgba(124,58,237,0.82);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+    backdrop-filter: blur(4px);
+    z-index: 2;
+  }
+
+  /* Estado vazio do portfólio */
+  .portfolio-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 6rem 2rem;
+    color: var(--muted);
+    border: 1px dashed rgba(124,58,237,0.2);
+    border-radius: 4px;
+  }
+  .portfolio-empty svg {
+    width: 48px; height: 48px;
+    color: var(--purple);
+    opacity: 0.25;
+    margin-bottom: 1.2rem;
+    display: block;
+    margin-left: auto; margin-right: auto;
+  }
+  .portfolio-empty p { font-size: 0.85rem; line-height: 1.7; }
 
   /* placeholder gradients for portfolio items without images */
   .portfolio-item.p1 { background: linear-gradient(135deg, #1a1a1a 0%, #2a2218 100%); }
@@ -906,8 +991,8 @@
     }
     .footer-section { width: 100%; }
 
-    /* ADMIN PANELS */
-    .admin-panel, .admin-projects-panel { 
+    /* ADMIN PANEL */
+    .admin-projects-panel {
       position: fixed;
       bottom: 0;
       left: 0;
@@ -918,7 +1003,7 @@
       border-radius: 0;
       padding: 1rem;
     }
-    .admin-content, .admin-projects-content {
+    .admin-projects-content {
       max-height: 90vh;
       overflow-y: auto;
       padding: 1rem;
@@ -1030,253 +1115,311 @@
     .cursor, .cursor-ring { display: none; }
   }
 
-  /* ── ADMIN PANEL ── */
-  .admin-panel {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 1000;
-    display: none;
-  }
-  .admin-panel.show {
-    display: block;
+  /* ════════════════════════════════════════════
+     DESIGN SYSTEM UPGRADE
+     ════════════════════════════════════════════ */
+
+  /* ── 1. LETTER-SPACING APLICADO ── */
+  .section-eyebrow,
+  .hero-eyebrow       { letter-spacing: var(--ls-wider); }
+  .section-title,
+  .hero-title         { letter-spacing: var(--ls-tight); }
+  .service-name,
+  .step-title         { letter-spacing: var(--ls-base); }
+  .nav-links a        { letter-spacing: var(--ls-wide); }
+  .tag                { letter-spacing: var(--ls-wider); }
+  .btn-primary,
+  .btn-ghost,
+  .form-submit,
+  .nav-cta            { letter-spacing: var(--ls-wide); }
+  .portfolio-cat,
+  .section-eyebrow    { letter-spacing: var(--ls-widest); }
+
+  /* ── 2. BORDAS EM GRADIENTE ── */
+
+  /* Nav scrolled */
+  nav.scrolled {
+    border-bottom: 1px solid transparent;
+    background:
+      linear-gradient(rgba(10,10,10,0.93), rgba(10,10,10,0.93)) padding-box,
+      var(--grad-border) border-box;
   }
 
-  .admin-content {
-    position: absolute;
-    bottom: 4.5rem;
-    right: 0;
-    background: var(--slate);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 2rem;
-    max-width: 420px;
-    max-height: 70vh;
-    overflow-y: auto;
-    display: block;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  /* Service card: barra superior vira gradiente */
+  .service-card::before {
+    background: var(--grad-brand);
   }
 
-  .admin-content h3 {
-    color: var(--white);
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.05em;
+  /* Tags: borda gradiente */
+  .tag {
+    border: 1px solid transparent;
+    background:
+      var(--carbon) padding-box,
+      linear-gradient(135deg, var(--purple), var(--purple-light)) border-box;
+    transition: color 0.3s;
   }
-  .admin-content > p {
-    color: var(--muted);
-    font-size: 0.8rem;
-    margin-bottom: 1.5rem;
+  .tag:hover { color: var(--purple-light); }
+
+  /* Contact method icon */
+  .method-icon {
+    border: 1px solid transparent;
+    background:
+      var(--carbon) padding-box,
+      var(--grad-border) border-box;
   }
 
-  .admin-items {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  .admin-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .admin-item label {
-    color: var(--white);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    font-weight: 500;
-  }
-  .admin-input {
-    background: var(--carbon);
-    border: 1px solid rgba(124,58,237,0.2);
-    border-bottom: 1px solid rgba(124,58,237,0.4);
-    color: var(--white);
-    padding: 0.6rem;
-    font-family: 'Inter', mono;
-    font-size: 0.7rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .admin-input:focus {
-    border-bottom-color: var(--purple);
-  }
-  .admin-item button {
-    background: var(--purple);
-    color: var(--black);
-    border: none;
-    padding: 0.55rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .admin-item button:hover {
-    background: var(--purple-light);
+  /* Footer */
+  footer {
+    border-top: 1px solid transparent;
+    background:
+      var(--black) padding-box,
+      var(--grad-border) border-box;
   }
 
-  /* ── FILE UPLOAD ── */
-  .file-upload {
+  /* Linha do processo: gradiente */
+  .step-line {
+    background: var(--grad-brand);
+  }
+
+  /* Portfolio item glow no hover */
+  .portfolio-item:hover {
+    box-shadow: 0 0 0 1.5px var(--purple-light), 0 0 30px rgba(124,58,237,0.18);
+  }
+
+  /* ── 3. CLIP-PATH EXCLUSIVOS ── */
+
+  /* Botões: corte diagonal no canto inferior-direito (chanfrado) */
+  .btn-primary,
+  .nav-cta,
+  .form-submit {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%);
+  }
+  .btn-primary:hover,
+  .nav-cta:hover,
+  .form-submit:hover {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 13px), calc(100% - 13px) 100%, 0 100%);
+  }
+
+  /* About badge: corte diagonal no canto superior-esquerdo */
+  .about-badge {
+    clip-path: polygon(18px 0, 100% 0, 100% 100%, 0 100%, 0 18px);
+  }
+
+  /* Eyebrow bars: leve ângulo */
+  .section-eyebrow::before,
+  .hero-eyebrow::before {
+    clip-path: polygon(0 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+  }
+
+  /* ── 4. HERO ITALIC: TEXTO EM GRADIENTE ── */
+  .hero-title .italic {
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent; /* fallback */
+  }
+
+  /* ── 5. MICRO-INTERACTIONS ── */
+
+  /* Shimmer nos botões primários */
+  .btn-primary,
+  .nav-cta,
+  .form-submit {
     position: relative;
-    border: 2px dashed rgba(124,58,237,0.3);
-    border-radius: 4px;
-    padding: 2rem 1rem;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.25s;
-    background: rgba(124,58,237,0.02);
-    min-height: 120px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
   }
-  .file-upload:hover {
-    border-color: var(--purple);
-    background: rgba(124,58,237,0.05);
-  }
-  .file-upload.dragover {
-    border-color: var(--purple);
-    background: rgba(124,58,237,0.1);
-    transform: scale(1.02);
-  }
-
-  .file-upload input {
-    display: none;
-  }
-
-  .upload-prompt {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
+  .btn-primary::after,
+  .nav-cta::after,
+  .form-submit::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--grad-shimmer);
+    background-size: 200% 100%;
+    opacity: 0;
+    transform: translateX(-120%);
+    transition: transform 0.55s ease, opacity 0.3s;
     pointer-events: none;
   }
-  .upload-prompt svg {
-    width: 32px;
-    height: 32px;
-    color: var(--purple);
-    opacity: 0.6;
-  }
-  .upload-prompt p {
-    color: var(--muted);
-    font-size: 0.75rem;
-    line-height: 1.4;
+  .btn-primary:hover::after,
+  .nav-cta:hover::after,
+  .form-submit:hover::after {
+    opacity: 1;
+    transform: translateX(120%);
   }
 
-  .upload-preview {
-    width: 100%;
-    margin-top: 1rem;
+  /* Process step number: pulse de luz no hover */
+  .process-step:hover .step-number {
+    color: rgba(124,58,237,0.35);
+    text-shadow: 0 0 60px rgba(124,58,237,0.4), 0 0 20px rgba(167,139,250,0.2);
   }
-  .upload-preview img {
-    width: 100%;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 2px;
-    border: 1px solid var(--border);
+
+  /* Service icon: sobe levemente no hover */
+  .service-card:hover .service-icon {
+    transform: translateY(-4px);
+    color: var(--purple-light);
   }
-  .upload-preview .preview-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 0.5rem;
-    font-size: 0.7rem;
-    color: var(--muted);
+  .service-icon {
+    transition: transform 0.35s ease, color 0.3s;
   }
-  .upload-preview .remove-btn {
-    background: none;
-    border: none;
-    color: #ff6b6b;
-    cursor: pointer;
-    padding: 0;
-    font-size: 0.8rem;
-    transition: color 0.2s;
+
+  /* ── 5b. STAGGER NOS CARDS DE SERVIÇO ── */
+  .services-grid .service-card { transition-delay: 0s; }
+  .services-grid .service-card:nth-child(1) .reveal { transition-delay: 0.06s; }
+  .services-grid .service-card:nth-child(2) .reveal { transition-delay: 0.13s; }
+  .services-grid .service-card:nth-child(3) .reveal { transition-delay: 0.20s; }
+  .services-grid .service-card:nth-child(4) .reveal { transition-delay: 0.27s; }
+  .services-grid .service-card:nth-child(5) .reveal { transition-delay: 0.34s; }
+  .services-grid .service-card:nth-child(6) .reveal { transition-delay: 0.41s; }
+
+  /* Stagger nos process steps */
+  .process-list .process-step:nth-child(1) { transition-delay: 0.05s; }
+  .process-list .process-step:nth-child(2) { transition-delay: 0.15s; }
+  .process-list .process-step:nth-child(3) { transition-delay: 0.25s; }
+  .process-list .process-step:nth-child(4) { transition-delay: 0.35s; }
+
+  /* ── 6. RITMO VISUAL: PROPORÇÃO ÁUREA NOS ESPAÇAMENTOS ── */
+  @media (min-width: 769px) {
+    #servicos  { padding: var(--sp-8) 3rem; }
+    #portfolio { padding: var(--sp-8) 3rem; }
+    #sobre     { padding: var(--sp-8) 3rem; }
+    #processo  { padding: var(--sp-8) 3rem; }
+    #contato   { padding: var(--sp-8) 3rem; }
+
+    .section-header  { margin-bottom: var(--sp-7); }
+    .about-body      { margin: var(--sp-5) 0 var(--sp-6); }
+    .process-list    { margin-top: var(--sp-7); }
+    .contact-methods { gap: var(--sp-5); }
   }
+
   /* ── PROJECT MODAL ── */
   .project-modal {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.95);
+    background: rgba(0,0,0,0.88);
+    backdrop-filter: blur(6px);
     display: none;
     align-items: center;
     justify-content: center;
     z-index: 3000;
-    padding: 1rem;
+    padding: 1.5rem;
     overflow-y: auto;
   }
-  .project-modal.open {
-    display: flex;
-  }
+  .project-modal.open { display: flex; }
 
   .project-modal-content {
-    background: var(--slate);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 3rem;
-    max-width: 900px;
+    background: linear-gradient(160deg, #161616 0%, var(--slate) 100%);
+    border: 1px solid transparent;
+    background-clip: padding-box;
+    border-radius: 6px;
+    padding: 2.5rem 2.8rem 2.8rem;
+    max-width: 860px;
     width: 100%;
     position: relative;
-    max-height: 90vh;
+    max-height: 92vh;
     overflow-y: auto;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(124,58,237,0.18);
+    animation: modalIn 0.3s cubic-bezier(.25,.8,.25,1);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0)  scale(1); }
   }
 
+  /* Close button */
   .modal-close {
     position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    background: none;
-    border: none;
+    top: 1.2rem; right: 1.2rem;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
     color: var(--muted);
-    font-size: 2rem;
     cursor: pointer;
-    transition: color 0.2s;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    padding: 0;
   }
   .modal-close:hover {
-    color: var(--purple);
+    background: rgba(124,58,237,0.15);
+    border-color: var(--purple);
+    color: var(--purple-light);
   }
+  .modal-close svg { width: 14px; height: 14px; }
 
+  /* Header */
   .project-header {
-    margin-bottom: 2rem;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 2rem;
-  }
-  .project-header h2 {
-    color: var(--white);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.2rem;
-    letter-spacing: 0.05em;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
+    padding-bottom: 1.8rem;
+    border-bottom: 1px solid;
+    border-image: var(--grad-border) 1;
   }
 
+  .project-header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    background: linear-gradient(120deg, var(--white) 0%, var(--purple-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+  }
+
+  .proj-cat-badge {
+    flex-shrink: 0;
+    font-size: var(--fs-2xs);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--purple-light);
+    border: 1px solid transparent;
+    background:
+      rgba(124,58,237,0.12) padding-box,
+      var(--grad-border) border-box;
+    padding: 0.35rem 0.9rem;
+    border-radius: 2px;
+    white-space: nowrap;
+    margin-top: 0.3rem;
+  }
+
+  /* Meta linha horizontal */
   .project-meta {
     display: flex;
-    gap: 2.5rem;
+    align-items: center;
+    gap: 0.6rem;
     flex-wrap: wrap;
   }
-  .meta-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  .meta-label {
+  .meta-text {
     color: var(--muted);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-size: var(--fs-xs);
+    letter-spacing: var(--ls-base);
   }
-  .meta-value {
-    color: var(--white);
-    font-size: 0.95rem;
+  .meta-sep {
+    color: rgba(124,58,237,0.5);
+    font-size: 0.7rem;
   }
 
+  /* Descrição */
   .project-description {
     margin-bottom: 2rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(124,58,237,0.35);
   }
   .project-description p {
     color: var(--muted);
-    line-height: 1.8;
-    font-size: 0.9rem;
+    line-height: 1.85;
+    font-size: var(--fs-sm);
+    font-style: italic;
   }
 
   .project-gallery {
@@ -1663,153 +1806,20 @@
     background: rgba(231,76,60,0.1);
   }
 
-  /* ── VIDEOS SECTION ── */
-  #videos {
-    padding: 8rem 3rem;
-    background: var(--black);
-  }
-
-  .videos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .video-card {
-    background: var(--slate);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s;
-  }
-
-  .video-card:hover {
-    border-color: var(--purple);
-    transform: translateY(-4px);
-  }
-
-  .video-embed {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-  }
-
-  .video-embed iframe {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    border: none;
-  }
-
-  .video-info {
-    padding: 1.2rem 1.5rem;
-  }
-
-  .video-info h4 {
-    color: var(--white);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.3rem;
-  }
-
-  .video-info p {
-    color: var(--muted);
-    font-size: 0.78rem;
-    line-height: 1.5;
-  }
-
-  .videos-empty {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 4rem 2rem;
-    color: var(--muted);
-    font-size: 0.9rem;
-    border: 1px dashed var(--border);
-    border-radius: 4px;
-  }
-
-  .videos-empty svg {
-    width: 48px; height: 48px;
-    color: var(--purple);
-    opacity: 0.3;
-    margin-bottom: 1rem;
-  }
-
-  .video-admin-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .video-admin-form .form-group label {
-    color: var(--muted);
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-
-  .video-admin-form .form-group input,
-  .video-admin-form .form-group textarea {
-    background: var(--carbon);
-    border: 1px solid rgba(124,58,237,0.2);
-    border-bottom: 1px solid rgba(124,58,237,0.4);
-    color: var(--white);
-    padding: 0.7rem 0.8rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    outline: none;
+  /* gallery main media container */
+  #galleryMainMedia {
     width: 100%;
-    transition: border-color 0.2s;
-  }
-
-  .video-admin-form .form-group input:focus,
-  .video-admin-form .form-group textarea:focus {
-    border-bottom-color: var(--purple);
-  }
-
-  .videos-admin-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-top: 1.5rem;
-  }
-
-  .video-admin-item {
-    background: var(--carbon);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    padding: 0.8rem 1rem;
+    height: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.8rem;
+    justify-content: center;
+    background: var(--carbon);
   }
-
-  .video-admin-item-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .video-admin-item-info strong {
-    color: var(--white);
-    font-size: 0.8rem;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .video-admin-item-info span {
-    color: var(--muted);
-    font-size: 0.7rem;
-  }
-
-  @media (max-width: 768px) {
-    #videos { padding: 4rem 1.5rem; }
-    .videos-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+  #galleryMainMedia img,
+  #galleryMainMedia video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   /* ── LOGIN MODAL ── */
@@ -1922,17 +1932,11 @@
   <ul class="nav-links">
     <li><a href="#servicos">Serviços</a></li>
     <li><a href="#portfolio">Portfólio</a></li>
-    <li><a href="#videos">Vídeos</a></li>
     <li><a href="#sobre">Sobre</a></li>
     <li><a href="#processo">Processo</a></li>
   </ul>
   <div class="nav-actions">
     <a href="#contato" class="nav-cta">Orçamento</a>
-    <button class="nav-admin-btn" title="Config. Site" onclick="toggleAdminPanel()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-      </svg>
-    </button>
     <button class="nav-admin-btn" title="Projetos" onclick="toggleAdminProjects()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
@@ -2087,113 +2091,40 @@
   </div>
 
   <div class="portfolio-grid" id="portfolioGrid">
-    <!-- ITEM 1 - VÍDEO GRANDE (7 colunas x 2 linhas) -->
-    <div class="portfolio-item p1" data-cat="video" onclick="openPortfolioProject(1)">
-      <img class="portfolio-img" src="https://images.unsplash.com/photo-1533928298208-27ff66555d0d?w=960&h=541&fit=crop" alt="Clipe Institucional"/>
-      <div class="portfolio-overlay">
-        <div class="portfolio-info">
-          <div class="portfolio-cat">Vídeo</div>
-          <div class="portfolio-title">Clipe Institucional</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ITEM 2 - FOTO (5 colunas x 1 linha) -->
-    <div class="portfolio-item p2" data-cat="foto" onclick="openPortfolioProject(2)">
-      <img class="portfolio-img" src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=480&h=721&fit=crop" alt="Ensaio de Produto"/>
-      <div class="portfolio-overlay">
-        <div class="portfolio-info">
-          <div class="portfolio-cat">Fotografia</div>
-          <div class="portfolio-title">Ensaio de Produto</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ITEM 3 - FOTO (5 colunas x 1 linha) -->
-    <div class="portfolio-item p3" data-cat="foto" onclick="openPortfolioProject(3)">
-      <img class="portfolio-img" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=480&h=721&fit=crop" alt="Retrato Profissional"/>
-      <div class="portfolio-overlay">
-        <div class="portfolio-info">
-          <div class="portfolio-cat">Fotografia</div>
-          <div class="portfolio-title">Retrato Profissional</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ITEM 4 - EVENTO (4 colunas x 2 linhas) -->
-    <div class="portfolio-item p4" data-cat="evento" onclick="openPortfolioProject(4)">
-      <img class="portfolio-img" src="https://images.unsplash.com/photo-1519671482677-764e0ade34bb?w=480&h=857&fit=crop" alt="Festival Verão SC"/>
-      <div class="portfolio-overlay">
-        <div class="portfolio-info">
-          <div class="portfolio-cat">Evento</div>
-          <div class="portfolio-title">Festival Verão SC</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ITEM 5 - VÍDEO (4 colunas x 2 linhas) -->
-    <div class="portfolio-item p5" data-cat="video" onclick="openPortfolioProject(5)">
-      <img class="portfolio-img" src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=480&h=857&fit=crop" alt="Reel de Marca"/>
-      <div class="portfolio-overlay">
-        <div class="portfolio-info">
-          <div class="portfolio-cat">Vídeo</div>
-          <div class="portfolio-title">Reel de Marca</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ITEM 6 - EVENTO (4 colunas x 2 linhas) -->
-    <div class="portfolio-item p6" data-cat="evento" onclick="openPortfolioProject(6)">
-      <img class="portfolio-img" src="https://images.unsplash.com/photo-1516876437184-593fda40c7ce?w=480&h=857&fit=crop" alt="Cobertura Corporativa"/>
-      <div class="portfolio-overlay">
-        <div class="portfolio-info">
-          <div class="portfolio-cat">Evento</div>
-          <div class="portfolio-title">Cobertura Corporativa</div>
-        </div>
-      </div>
-    </div>
+    <!-- preenchido dinamicamente via JS a partir dos projetos do admin -->
   </div>
 
 <!-- PROJECT DETAIL MODAL -->
 <div class="project-modal" id="projectModal">
   <div class="project-modal-content">
-    <button class="modal-close" onclick="closeProjectModal()">&times;</button>
-    
+    <button class="modal-close" onclick="closeProjectModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
     <div class="project-header">
-      <h2 id="projectTitle">Título do Projeto</h2>
-      <div class="project-meta">
-        <div class="meta-item">
-          <span class="meta-label">📅 Data</span>
-          <span class="meta-value" id="projectDate">-</span>
-        </div>
-        <div class="meta-item">
-          <span class="meta-label">📍 Local</span>
-          <span class="meta-value" id="projectLocation">-</span>
-        </div>
-        <div class="meta-item">
-          <span class="meta-label">🏷️ Categoria</span>
-          <span class="meta-value" id="projectCategory">-</span>
-        </div>
+      <div class="project-header-row">
+        <h2 id="projectTitle"></h2>
+        <span class="proj-cat-badge" id="projectCategory"></span>
       </div>
+      <div class="project-meta" id="projectMeta"></div>
     </div>
 
-    <div class="project-description">
-      <p id="projectDesc">-</p>
+    <div class="project-description" id="projectDescWrap">
+      <p id="projectDesc"></p>
     </div>
 
     <div class="project-gallery">
       <div class="gallery-main">
-        <img id="galleryMainImg" src="" alt=""/>
+        <div id="galleryMainMedia"></div>
         <button class="gallery-nav prev" onclick="prevGalleryImage()">‹</button>
         <button class="gallery-nav next" onclick="nextGalleryImage()">›</button>
         <div class="gallery-counter">
           <span id="currentImgNum">1</span> / <span id="totalImgNum">0</span>
         </div>
       </div>
-
-      <div class="gallery-thumbnails" id="galleryThumbnails">
-        <!-- Thumbnails aparecem aqui -->
-      </div>
+      <div class="gallery-thumbnails" id="galleryThumbnails"></div>
     </div>
   </div>
 </div>
@@ -2201,9 +2132,13 @@
 <!-- ADMIN PROJECTS PANEL -->
 <div class="admin-projects-panel" id="adminProjectsPanel">
   <div class="admin-projects-content">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
       <h3>Gerenciar Projetos</h3>
       <button onclick="closeAdminProjects()" style="background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.8rem; padding: 0; line-height: 1;">×</button>
+    </div>
+    <div id="cloudinaryStatus" style="margin-bottom:1.2rem;padding:0.6rem 0.9rem;border-radius:3px;font-size:0.72rem;display:flex;align-items:center;justify-content:space-between;gap:0.8rem;background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);">
+      <span id="cloudinaryStatusText" style="color:var(--muted);">☁️ Cloudinary: verificando...</span>
+      <button onclick="testCloudinary()" style="background:none;border:1px solid rgba(124,58,237,0.4);color:var(--purple);font-size:0.65rem;padding:0.25rem 0.6rem;cursor:pointer;border-radius:2px;white-space:nowrap;">Testar</button>
     </div>
     
     <div class="projects-tabs">
@@ -2212,7 +2147,6 @@
       <button class="projects-tab" onclick="showContactsTab()">💬 Mensagens</button>
       <button class="projects-tab" onclick="showMediaTab()">🎬 Mídia Hero</button>
       <button class="projects-tab" onclick="showAboutImageTab()">🖼️ Sobre Nós</button>
-      <button class="projects-tab" onclick="showVideosTab()">▶️ Vídeos</button>
     </div>
 
     <!-- ABA: LISTA DE PROJETOS -->
@@ -2256,18 +2190,19 @@
         </div>
 
         <div class="form-group">
-          <label>Fotos do Projeto</label>
+          <label>Fotos e Vídeos do Projeto</label>
           <div class="file-upload-multiple" id="projectFilesUpload" ondrop="handleProjectFilesDrop(event)" ondragover="handleDragOver(event)">
-            <input type="file" id="projectFiles" accept="image/*" multiple onchange="handleProjectFilesSelect(event)"/>
+            <input type="file" id="projectFiles" accept="image/*,video/*" multiple onchange="handleProjectFilesSelect(event)"/>
             <div class="upload-prompt">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="17 8 12 3 7 8"></polyline>
                 <line x1="12" y1="3" x2="12" y2="15"></line>
               </svg>
-              <p>Arraste as fotos aqui ou clique para selecionar múltiplas imagens</p>
+              <p>Arraste fotos e vídeos aqui ou clique para selecionar<br><small style="opacity:0.6">JPG, PNG, MP4, MOV, WebM — máx 100MB por arquivo</small></p>
             </div>
           </div>
+          <div id="uploadErrorBox" style="display:none;margin-top:0.8rem;padding:0.7rem 1rem;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:3px;color:#f87171;font-size:0.75rem;line-height:1.5;"></div>
           <div class="project-images-preview" id="projectImagesPreview"></div>
         </div>
 
@@ -2308,30 +2243,6 @@
           <strong>💡 Dica:</strong> Use imagens em alta qualidade (1920x1080px ou maior). Vídeos serão convertidos para poster automático.
         </p>
       </div>
-    </div>
-
-    <!-- ABA: VÍDEOS -->
-    <div class="projects-tab-content" id="tabVideos">
-      <h4 style="color: var(--white); margin-bottom: 0.5rem;">Adicionar Vídeo</h4>
-      <p style="color: var(--muted); font-size: 0.82rem; margin-bottom: 1.2rem;">Cole a URL do YouTube ou Vimeo para exibir na seção de vídeos do site.</p>
-
-      <form class="video-admin-form" onsubmit="saveVideo(event)">
-        <div class="form-group">
-          <label>URL do Vídeo (YouTube ou Vimeo)</label>
-          <input type="url" id="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required/>
-        </div>
-        <div class="form-group">
-          <label>Título</label>
-          <input type="text" id="videoTitle" placeholder="Ex: Clipe Institucional Marca X" required/>
-        </div>
-        <div class="form-group">
-          <label>Descrição (opcional)</label>
-          <textarea id="videoDesc" placeholder="Breve descrição do vídeo..." style="min-height:60px; resize: vertical;"></textarea>
-        </div>
-        <button type="submit" class="form-submit" style="align-self: flex-start; margin-top: 0.3rem;">Adicionar Vídeo</button>
-      </form>
-
-      <div class="videos-admin-list" id="videosAdminList"></div>
     </div>
 
     <!-- ABA: EDITAR IMAGEM SOBRE NÓS -->
@@ -2375,132 +2286,6 @@
   </div>
 </div>
 
-<!-- ADMIN PANEL -->
-<div class="admin-panel" id="adminPanel">
-  <div class="admin-content">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-      <h3>Configurar Portfólio</h3>
-      <button onclick="closeAdminPanel()" style="background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.8rem; padding: 0; line-height: 1; transition: color 0.2s;" onmouseover="this.style.color='var(--purple)'" onmouseout="this.style.color='var(--muted)'">×</button>
-    </div>
-    <p>Adicione as URLs das suas imagens:</p>
-    <div class="admin-items">
-      <div class="admin-item">
-        <label>Item 1 - Clipe Institucional (Vídeo)</label>
-        <div class="file-upload" id="upload1" ondrop="handleDrop(event, 1)" ondragover="handleDragOver(event)">
-          <input type="file" id="file1" accept="image/*" onchange="handleFileSelect(event, 1)"/>
-          <div class="upload-prompt">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-            <p>Arraste a imagem aqui ou clique para selecionar</p>
-          </div>
-          <div class="upload-preview" id="preview1"></div>
-        </div>
-      </div>
-
-      <div class="admin-item">
-        <label>Item 2 - Ensaio de Produto (Foto)</label>
-        <div class="file-upload" id="upload2" ondrop="handleDrop(event, 2)" ondragover="handleDragOver(event)">
-          <input type="file" id="file2" accept="image/*" onchange="handleFileSelect(event, 2)"/>
-          <div class="upload-prompt">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-            <p>Arraste a imagem aqui ou clique para selecionar</p>
-          </div>
-          <div class="upload-preview" id="preview2"></div>
-        </div>
-      </div>
-
-      <div class="admin-item">
-        <label>Item 3 - Retrato Profissional (Foto)</label>
-        <div class="file-upload" id="upload3" ondrop="handleDrop(event, 3)" ondragover="handleDragOver(event)">
-          <input type="file" id="file3" accept="image/*" onchange="handleFileSelect(event, 3)"/>
-          <div class="upload-prompt">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-            <p>Arraste a imagem aqui ou clique para selecionar</p>
-          </div>
-          <div class="upload-preview" id="preview3"></div>
-        </div>
-      </div>
-
-      <div class="admin-item">
-        <label>Item 4 - Festival Verão SC (Evento)</label>
-        <div class="file-upload" id="upload4" ondrop="handleDrop(event, 4)" ondragover="handleDragOver(event)">
-          <input type="file" id="file4" accept="image/*" onchange="handleFileSelect(event, 4)"/>
-          <div class="upload-prompt">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-            <p>Arraste a imagem aqui ou clique para selecionar</p>
-          </div>
-          <div class="upload-preview" id="preview4"></div>
-        </div>
-      </div>
-
-      <div class="admin-item">
-        <label>Item 5 - Reel de Marca (Vídeo)</label>
-        <div class="file-upload" id="upload5" ondrop="handleDrop(event, 5)" ondragover="handleDragOver(event)">
-          <input type="file" id="file5" accept="image/*" onchange="handleFileSelect(event, 5)"/>
-          <div class="upload-prompt">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-            <p>Arraste a imagem aqui ou clique para selecionar</p>
-          </div>
-          <div class="upload-preview" id="preview5"></div>
-        </div>
-      </div>
-
-      <div class="admin-item">
-        <label>Item 6 - Cobertura Corporativa (Evento)</label>
-        <div class="file-upload" id="upload6" ondrop="handleDrop(event, 6)" ondragover="handleDragOver(event)">
-          <input type="file" id="file6" accept="image/*" onchange="handleFileSelect(event, 6)"/>
-          <div class="upload-prompt">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-            <p>Arraste a imagem aqui ou clique para selecionar</p>
-          </div>
-          <div class="upload-preview" id="preview6"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</section>
-
-<!-- VIDEOS -->
-<section id="videos">
-  <div class="section-header reveal">
-    <div>
-      <div class="section-eyebrow">Nossos vídeos</div>
-      <h2 class="section-title">Produções em Vídeo</h2>
-    </div>
-  </div>
-
-  <div class="videos-grid" id="videosGrid">
-    <div class="videos-empty">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-      </svg>
-      <p>Nenhum vídeo adicionado ainda.<br>Acesse o painel admin para adicionar vídeos.</p>
-    </div>
-  </div>
 </section>
 
 <!-- ABOUT -->
@@ -2653,6 +2438,7 @@
 <footer>
   <a href="#" class="footer-logo">MH CREATIVEWORKS</a>
   <span class="footer-copy">© 2025 MH Creativeworks · Santa Catarina, Brasil</span>
+  <span id="siteVersion" style="font-size:0.55rem;color:rgba(122,122,122,0.4);letter-spacing:0.08em;"></span>
   <div class="footer-links">
     <a href="#servicos">Serviços</a>
     <a href="#portfolio">Portfólio</a>
@@ -2661,14 +2447,40 @@
 </footer>
 
 <script>
+  // ── EFEITO MAGNÉTICO NOS BOTÕES ──
+  document.querySelectorAll('.btn-primary, .nav-cta').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width  / 2) * 0.18;
+      const y = (e.clientY - r.top  - r.height / 2) * 0.18;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+
+  // ── SCROLL TRIGGER COM STAGGER NOS ITENS DO PORTFÓLIO ──
+  const portfolioObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.portfolio-item').forEach((item, i) => {
+          setTimeout(() => item.style.opacity = '1', i * 80);
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+  const portfolioGrid = document.getElementById('portfolioGrid');
+  if (portfolioGrid) portfolioObserver.observe(portfolioGrid);
+
   // Cursor
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
+  let mx = 0, my = 0, rx = 0, ry = 0, cursorHovered = false;
 
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
-    cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+    cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)${cursorHovered ? ' scale(2)' : ''}`;
   });
 
   function animateRing() {
@@ -2681,10 +2493,11 @@
 
   document.querySelectorAll('a, button, .portfolio-item, .service-card').forEach(el => {
     el.addEventListener('mouseenter', () => {
-      cursor.style.transform += ' scale(2)';
+      cursorHovered = true;
       ring.style.opacity = '0.9';
     });
     el.addEventListener('mouseleave', () => {
+      cursorHovered = false;
       ring.style.opacity = '0.5';
     });
   });
@@ -2704,6 +2517,7 @@
 
   // Portfolio filter
   function filterPortfolio(btn, cat) {
+    activeFilter = cat;
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.portfolio-item').forEach(item => {
@@ -2765,211 +2579,94 @@
   });
 
   // Admin Panel - Autenticação
-  const ADMIN_PASSWORD = 'admin123'; // MUDE ISSO para sua senha!
-  
-  function checkAdminStatus() {
-    const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
-    
-    if (isLoggedIn === 'true') {
-      loadSavedImages();
+  // ── CLOUDINARY ──
+  const CLOUDINARY_CLOUD  = 'db2uzyglo';
+  const CLOUDINARY_PRESET = 'default';
+
+  async function uploadToCloudinary(file) {
+    const resourceType = file.type.startsWith('video/') ? 'video' : 'image';
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_PRESET);
+
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/${resourceType}/upload`,
+      { method: 'POST', body: formData }
+    );
+    const data = await res.json();
+    if (!res.ok || data.error) {
+      throw new Error(data.error?.message || `HTTP ${res.status}`);
+    }
+    return data.secure_url;
+  }
+
+  function setCloudinaryStatus(ok, msg) {
+    const el = document.getElementById('cloudinaryStatus');
+    const txt = document.getElementById('cloudinaryStatusText');
+    if (!el || !txt) return;
+    txt.textContent = msg;
+    txt.style.color = ok ? '#4ade80' : '#f87171';
+    el.style.borderColor = ok ? 'rgba(74,222,128,0.3)' : 'rgba(248,113,113,0.3)';
+    el.style.background  = ok ? 'rgba(74,222,128,0.07)' : 'rgba(248,113,113,0.07)';
+  }
+
+  async function testCloudinary() {
+    setCloudinaryStatus(null, '☁️ Testando conexão...');
+    document.getElementById('cloudinaryStatusText').style.color = 'var(--muted)';
+    try {
+      // envia pixel PNG 1×1 como teste
+      const blob = await fetch('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQI12NgAAIABQAABjE+ibYAAAAASUVORK5CYII=').then(r => r.blob());
+      const file = new File([blob], 'test.png', { type: 'image/png' });
+      await uploadToCloudinary(file);
+      setCloudinaryStatus(true, '✓ Cloudinary conectado — uploads funcionando');
+    } catch (err) {
+      setCloudinaryStatus(false, `✗ Erro: ${err.message}`);
     }
   }
 
-  function handleLogin(e) {
+  // SHA-256 de 'admin123' — para trocar a senha, gere o hash da nova senha com
+  // crypto.subtle e substitua este valor
+  const ADMIN_PASSWORD_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9';
+
+  async function hashPassword(pwd) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function checkAdminStatus() {
+    // sessionStorage mantém sessão do admin enquanto a aba estiver aberta
+  }
+
+  async function handleLogin(e) {
     e.preventDefault();
     const password = document.getElementById('adminPass').value;
     const errorMsg = document.getElementById('loginError');
-    
-    if (password === ADMIN_PASSWORD) {
+
+    const hash = await hashPassword(password);
+    if (hash === ADMIN_PASSWORD_HASH) {
       sessionStorage.setItem('adminLoggedIn', 'true');
       document.getElementById('loginOverlay').classList.remove('show');
       document.getElementById('adminPass').value = '';
-      checkAdminStatus();
-      // Mostra o painel de admin após login bem-sucedido
-      document.getElementById('adminPanel').classList.add('show');
+      document.getElementById('adminProjectsPanel').classList.add('show');
     } else {
       errorMsg.classList.add('show');
-      setTimeout(() => {
-        errorMsg.classList.remove('show');
-      }, 3000);
+      setTimeout(() => errorMsg.classList.remove('show'), 3000);
     }
   }
 
   function handleLogout() {
     sessionStorage.removeItem('adminLoggedIn');
-    checkAdminStatus();
-    document.getElementById('adminPanel').classList.remove('show');
+    document.getElementById('adminProjectsPanel').classList.remove('show');
   }
 
 
- function toggleAdminPanel() {
-   const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
-  const panel = document.getElementById('adminPanel');
-  
-  if (isLoggedIn !== 'true') {
-    document.getElementById('loginOverlay').classList.add('show');
-    document.getElementById('adminPass').focus();
-    return;
-  }
-  
 
-  panel.classList.toggle('show');
-}
-  
 
   function handleDragOver(e) {
     e.preventDefault();
     e.stopPropagation();
     const uploadDiv = e.currentTarget;
     uploadDiv.classList.add('dragover');
-  }
-
-  function handleDrop(e, itemNum) {
-    e.preventDefault();
-    e.stopPropagation();
-    const uploadDiv = e.currentTarget;
-    uploadDiv.classList.remove('dragover');
-    
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      processFile(files[0], itemNum);
-    }
-  }
-
-  function handleFileSelect(e, itemNum) {
-    const files = e.target.files;
-    if (files.length > 0) {
-      processFile(files[0], itemNum);
-    }
-  }
-
-  function processFile(file, itemNum) {
-    // Validar se é imagem
-    if (!file.type.startsWith('image/')) {
-      alert('Por favor, selecione uma imagem (JPG, PNG, etc)');
-      return;
-    }
-
-    // Validar tamanho (máximo 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Imagem muito grande! Máximo 5MB');
-      return;
-    }
-
-    // Ler arquivo como Data URL
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const dataUrl = e.target.result;
-      updateImageFromFile(dataUrl, file.name, itemNum);
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function updateImageFromFile(dataUrl, fileName, itemNum) {
-    const uploadDiv = document.getElementById(`upload${itemNum}`);
-    const uploadPrompt = uploadDiv.querySelector('.upload-prompt');
-    const preview = uploadDiv.querySelector('.upload-preview');
-
-    // Mostrar preview
-    preview.innerHTML = `
-      <img src="${dataUrl}" alt="Preview"/>
-      <div class="preview-info">
-        <span>${fileName}</span>
-        <button class="remove-btn" onclick="removeImage(${itemNum})">Remover</button>
-      </div>
-    `;
-    uploadPrompt.style.display = 'none';
-
-    // Aplicar imagem ao portfólio
-    const item = document.querySelectorAll('.portfolio-item')[itemNum - 1];
-    let img = item.querySelector('.portfolio-img');
-    
-    if (!img) {
-      img = document.createElement('img');
-      img.className = 'portfolio-img';
-      item.insertBefore(img, item.firstChild);
-    }
-    
-    img.src = dataUrl;
-    img.alt = `Projeto ${itemNum}`;
-
-    // Salvar em sessionStorage
-    sessionStorage.setItem(`portfolio_img_${itemNum}`, dataUrl);
-
-    // Feedback visual
-    setTimeout(() => {
-      const prompt = document.getElementById(`upload${itemNum}`).querySelector('.upload-prompt');
-      if (prompt) {
-        prompt.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg><p>✓ Imagem carregada com sucesso!</p>';
-        prompt.style.display = 'flex';
-        prompt.style.color = 'var(--purple)';
-      }
-    }, 500);
-
-    setTimeout(() => {
-      const prompt = document.getElementById(`upload${itemNum}`).querySelector('.upload-prompt');
-      if (prompt) {
-        prompt.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg><p>Arraste a imagem aqui ou clique para selecionar</p>';
-        prompt.style.display = 'flex';
-        prompt.style.color = '';
-      }
-    }, 2000);
-  }
-
-  function removeImage(itemNum) {
-    const uploadDiv = document.getElementById(`upload${itemNum}`);
-    const uploadPrompt = uploadDiv.querySelector('.upload-prompt');
-    const preview = uploadDiv.querySelector('.upload-preview');
-    const fileInput = uploadDiv.querySelector('input[type="file"]');
-
-    // Limpar preview
-    preview.innerHTML = '';
-    uploadPrompt.style.display = 'flex';
-    fileInput.value = '';
-
-    // Remover imagem do portfólio
-    const item = document.querySelectorAll('.portfolio-item')[itemNum - 1];
-    const img = item.querySelector('.portfolio-img');
-    if (img) img.remove();
-
-    // Remover de sessionStorage
-    sessionStorage.removeItem(`portfolio_img_${itemNum}`);
-  }
-
-  function loadSavedImages() {
-    for (let i = 1; i <= 6; i++) {
-      const saved = sessionStorage.getItem(`portfolio_img_${i}`);
-      if (saved) {
-        // Aplicar ao portfólio
-        const item = document.querySelectorAll('.portfolio-item')[i - 1];
-        let img = item.querySelector('.portfolio-img');
-        
-        if (!img) {
-          img = document.createElement('img');
-          img.className = 'portfolio-img';
-          item.insertBefore(img, item.firstChild);
-        }
-        
-        img.src = saved;
-        img.alt = `Projeto ${i}`;
-
-        // Mostrar preview no painel
-        const uploadDiv = document.getElementById(`upload${i}`);
-        if (uploadDiv) {
-          const uploadPrompt = uploadDiv.querySelector('.upload-prompt');
-          const preview = uploadDiv.querySelector('.upload-preview');
-          
-          preview.innerHTML = `
-            <img src="${saved}" alt="Preview"/>
-            <div class="preview-info">
-              <span>Imagem carregada</span>
-              <button class="remove-btn" onclick="removeImage(${i})">Remover</button>
-            </div>
-          `;
-          uploadPrompt.style.display = 'none';
-        }
-      }
-    }
   }
 
   // Fechar modal ao clicar fora
@@ -2983,41 +2680,48 @@
   let currentProjectIndex = -1;
   let currentGalleryImageIndex = 0;
   let projectsTemp = [];
+  let activeFilter = 'all';
+  let editingProjectId = null;
 
   function toggleAdminProjects() {
     const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
     const panel = document.getElementById('adminProjectsPanel');
-    
+
     if (isLoggedIn !== 'true') {
       document.getElementById('loginOverlay').classList.add('show');
       document.getElementById('adminPass').focus();
       return;
     }
-    
+
+    const opening = !panel.classList.contains('show');
     panel.classList.toggle('show');
+    if (opening) testCloudinary();
   }
 
   function closeAdminProjects() {
     document.getElementById('adminProjectsPanel').classList.remove('show');
   }
 
-  function closeAdminPanel() {
-    document.getElementById('adminPanel').classList.remove('show');
-  }
-
   function showProjectsTab(tab) {
     document.querySelectorAll('.projects-tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.projects-tab').forEach(el => el.classList.remove('active'));
-    
+
     if (tab === 'list') {
       document.getElementById('tabList').classList.add('active');
       document.querySelectorAll('.projects-tab')[0].classList.add('active');
     } else {
       document.getElementById('tabCreate').classList.add('active');
       document.querySelectorAll('.projects-tab')[1].classList.add('active');
-      document.getElementById('projectForm').reset();
-      document.getElementById('projectImagesPreview').innerHTML = '';
-      projectsTemp = [];
+      // só reseta o form se não estiver vindo de editProject()
+      if (editingProjectId === null) {
+        document.getElementById('projectForm').reset();
+        document.getElementById('projectImagesPreview').innerHTML = '';
+        projectsTemp = [];
+      }
+      const errBox = document.getElementById('uploadErrorBox');
+      if (errBox) errBox.style.display = 'none';
+      document.querySelector('#projectForm .form-submit').textContent =
+        editingProjectId !== null ? 'Salvar Alterações' : 'Salvar Projeto';
     }
   }
 
@@ -3028,34 +2732,65 @@
     handleProjectFilesSelect({ target: { files: files } });
   }
 
-  function handleProjectFilesSelect(e) {
+  async function handleProjectFilesSelect(e) {
     const files = Array.from(e.target.files);
-    
-    files.forEach((file, idx) => {
-      if (!file.type.startsWith('image/')) return;
-      if (file.size > 5 * 1024 * 1024) {
-        alert(`Arquivo ${file.name} é muito grande (máximo 5MB)`);
-        return;
-      }
 
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        projectsTemp.push({
-          dataUrl: event.target.result,
-          fileName: file.name
-        });
-        renderProjectImagesPreview();
-      };
-      reader.readAsDataURL(file);
-    });
+    for (const file of files) {
+      const isImage = file.type.startsWith('image/');
+      const isVideo = file.type.startsWith('video/');
+      if (!isImage && !isVideo) continue;
+
+      // insere placeholder de loading imediatamente
+      const placeholderIdx = projectsTemp.length;
+      projectsTemp.push({
+        type: isVideo ? 'video' : 'image',
+        dataUrl: null,
+        fileName: file.name,
+        mimeType: file.type,
+        uploading: true
+      });
+      renderProjectImagesPreview();
+
+      try {
+        const url = await uploadToCloudinary(file);
+        projectsTemp[placeholderIdx] = {
+          type: isVideo ? 'video' : 'image',
+          dataUrl: url,
+          fileName: file.name,
+          mimeType: file.type
+        };
+        setCloudinaryStatus(true, '✓ Cloudinary conectado — uploads funcionando');
+      } catch (err) {
+        projectsTemp.splice(placeholderIdx, 1);
+        setCloudinaryStatus(false, `✗ Upload falhou: ${err.message}`);
+        // mostra erro visível abaixo do campo de upload
+        const errBox = document.getElementById('uploadErrorBox');
+        if (errBox) {
+          errBox.textContent = `❌ Erro ao enviar "${file.name}": ${err.message}`;
+          errBox.style.display = 'block';
+        }
+      }
+      renderProjectImagesPreview();
+    }
   }
 
   function renderProjectImagesPreview() {
     const preview = document.getElementById('projectImagesPreview');
-    preview.innerHTML = projectsTemp.map((img, idx) => `
+    preview.innerHTML = projectsTemp.map((item, idx) => `
       <div class="preview-img-item">
-        <img src="${img.dataUrl}" alt=""/>
-        <div class="preview-img-remove" onclick="removeProjectImage(${idx})">×</div>
+        ${item.uploading
+          ? `<div style="width:100%;height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--slate);gap:0.4rem;">
+               <div style="width:28px;height:28px;border:2px solid var(--purple);border-top-color:transparent;border-radius:50%;animation:spin 0.7s linear infinite;"></div>
+               <span style="font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;">ENVIANDO</span>
+             </div>`
+          : item.type === 'video'
+            ? `<video src="${item.dataUrl}" style="width:100%;height:70px;object-fit:cover;display:block;"></video>
+               <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+                 <span style="font-size:1.4rem;filter:drop-shadow(0 1px 3px #000);">▶</span>
+               </div>`
+            : `<img src="${item.dataUrl}" alt=""/>`
+        }
+        ${!item.uploading ? `<div class="preview-img-remove" onclick="removeProjectImage(${idx})">×</div>` : ''}
       </div>
     `).join('');
   }
@@ -3067,9 +2802,13 @@
 
   function saveProject(e) {
     e.preventDefault();
-    
+
     if (projectsTemp.length === 0) {
-      alert('Adicione pelo menos uma imagem ao projeto');
+      alert('Adicione pelo menos uma foto ou vídeo ao projeto');
+      return;
+    }
+    if (projectsTemp.some(m => m.uploading)) {
+      alert('Aguarde o envio de todos os arquivos antes de salvar');
       return;
     }
 
@@ -3079,6 +2818,10 @@
     const category = document.getElementById('projCategory').value;
     const desc = document.getElementById('projDesc').value;
 
+    // thumbnail: primeira imagem se existir, senão primeiro vídeo
+    const firstImage = projectsTemp.find(m => m.type === 'image');
+    const thumbnail = firstImage ? firstImage.dataUrl : projectsTemp[0].dataUrl;
+
     const project = {
       id: Date.now(),
       title,
@@ -3086,76 +2829,163 @@
       location,
       category,
       description: desc,
-      thumbnail: projectsTemp[0].dataUrl,
-      images: projectsTemp.map(img => img.dataUrl)
+      thumbnail,
+      media: projectsTemp.map(m => ({ type: m.type, dataUrl: m.dataUrl, mimeType: m.mimeType, fileName: m.fileName }))
     };
 
-    let projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
-    projects.push(project);
-    sessionStorage.setItem('projects', JSON.stringify(projects));
+    let projects = JSON.parse(localStorage.getItem('projects') || '[]');
+
+    if (editingProjectId !== null) {
+      const idx = projects.findIndex(p => p.id === editingProjectId);
+      if (idx !== -1) {
+        project.id = editingProjectId;
+        projects[idx] = project;
+      }
+      editingProjectId = null;
+    } else {
+      projects.push(project);
+    }
+
+    try {
+      localStorage.setItem('projects', JSON.stringify(projects));
+    } catch (err) {
+      alert('❌ Erro ao salvar: arquivos muito grandes para o armazenamento local. Tente imagens menores ou reduza a quantidade de vídeos.');
+      editingProjectId = null;
+      return;
+    }
 
     alert('✓ Projeto salvo com sucesso!');
     document.getElementById('projectForm').reset();
+    document.querySelector('#projectForm .form-submit').textContent = 'Salvar Projeto';
     projectsTemp = [];
     document.getElementById('projectImagesPreview').innerHTML = '';
     showProjectsTab('list');
     loadProjects();
+    renderPortfolioGrid();
   }
 
   function loadProjects() {
-    const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
     const list = document.getElementById('projectsList');
-    
+
     if (projects.length === 0) {
       list.innerHTML = '<p style="color: var(--muted); font-size: 0.85rem;">Nenhum projeto ainda.</p>';
       return;
     }
 
-    list.innerHTML = projects.map((proj, idx) => `
-      <div class="project-item">
-        <img src="${proj.thumbnail}" alt="" class="project-item-thumb"/>
-        <div class="project-item-info">
-          <h4>${proj.title}</h4>
-          <p>${proj.date} • ${proj.location}</p>
-          <p>${proj.images.length} foto${proj.images.length > 1 ? 's' : ''}</p>
+    list.innerHTML = projects.map((proj, idx) => {
+      const media = proj.media || proj.images?.map(d => ({ type: 'image', dataUrl: d })) || [];
+      const imgCount = media.filter(m => m.type === 'image').length;
+      const vidCount = media.filter(m => m.type === 'video').length;
+      const counts = [imgCount && `${imgCount} foto${imgCount > 1 ? 's' : ''}`, vidCount && `${vidCount} vídeo${vidCount > 1 ? 's' : ''}`].filter(Boolean).join(' · ');
+      const thumb = proj.thumbnail || (media[0] && media[0].dataUrl) || '';
+      return `
+        <div class="project-item">
+          ${proj.media?.find(m => m.type === 'video') && !proj.media?.find(m => m.type === 'image')
+            ? `<div class="project-item-thumb" style="background:var(--slate);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">▶</div>`
+            : `<img src="${thumb}" alt="" class="project-item-thumb"/>`
+          }
+          <div class="project-item-info">
+            <h4>${proj.title}</h4>
+            <p>${proj.date} • ${proj.location}</p>
+            <p>${counts}</p>
+          </div>
+          <div class="project-item-actions">
+            <button class="project-item-btn" onclick="editProject(${idx})">Editar</button>
+            <button class="project-item-btn" onclick="deleteProject(${idx})">Deletar</button>
+          </div>
         </div>
-        <div class="project-item-actions">
-          <button class="project-item-btn" onclick="editProject(${idx})">Editar</button>
-          <button class="project-item-btn" onclick="deleteProject(${idx})">Deletar</button>
-        </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   function editProject(idx) {
-    alert('Edição em desenvolvimento');
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+    const proj = projects[idx];
+    if (!proj) return;
+
+    editingProjectId = proj.id;
+    projectsTemp = (proj.media || []).map(m => ({ ...m }));
+
+    showProjectsTab('create');
+
+    document.getElementById('projTitle').value = proj.title || '';
+    document.getElementById('projLocation').value = proj.location || '';
+    document.getElementById('projCategory').value = proj.category || 'foto';
+    document.getElementById('projDesc').value = proj.description || '';
+
+    // converte "DD/MM/AAAA" de volta para "AAAA-MM-DD" (formato do input[type=date])
+    if (proj.date && proj.date !== '-') {
+      const parts = proj.date.split('/');
+      if (parts.length === 3) {
+        document.getElementById('projDate').value = `${parts[2]}-${parts[1]}-${parts[0]}`;
+      }
+    } else {
+      document.getElementById('projDate').value = '';
+    }
+
+    renderProjectImagesPreview();
   }
 
   function deleteProject(idx) {
     if (!confirm('Tem certeza que deseja deletar este projeto?')) return;
     
-    let projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    let projects = JSON.parse(localStorage.getItem('projects') || '[]');
     projects.splice(idx, 1);
-    sessionStorage.setItem('projects', JSON.stringify(projects));
+    localStorage.setItem('projects', JSON.stringify(projects));
     loadProjects();
+    renderPortfolioGrid();
+  }
+
+  function getProjectMedia(project) {
+    // compatibilidade com projetos antigos que usavam `images`
+    if (project.media) return project.media;
+    return (project.images || []).map(d => ({ type: 'image', dataUrl: d, mimeType: 'image/jpeg' }));
   }
 
   function openProjectModal(projectId) {
-    const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
     const project = projects.find(p => p.id === projectId);
-    
     if (!project) return;
 
     currentProjectIndex = projectId;
     currentGalleryImageIndex = 0;
 
-    document.getElementById('projectTitle').textContent = project.title;
-    document.getElementById('projectDate').textContent = project.date;
-    document.getElementById('projectLocation').textContent = project.location;
-    document.getElementById('projectCategory').textContent = project.category.toUpperCase();
-    document.getElementById('projectDesc').textContent = project.description;
+    // Título
+    document.getElementById('projectTitle').textContent = project.title || '';
 
-    document.getElementById('totalImgNum').textContent = project.images.length;
+    // Badge de categoria
+    const catEl = document.getElementById('projectCategory');
+    if (project.category) {
+      catEl.textContent = project.category.toUpperCase();
+      catEl.style.display = '';
+    } else {
+      catEl.style.display = 'none';
+    }
+
+    // Meta: data e local — só mostra os que foram preenchidos
+    const metaEl = document.getElementById('projectMeta');
+    const parts = [];
+    const hasDate = project.date && project.date !== '-' && project.date.trim();
+    const hasLoc  = project.location && project.location.trim();
+    if (hasDate) parts.push(`<span class="meta-text">${project.date}</span>`);
+    if (hasLoc)  parts.push(`<span class="meta-text">${project.location}</span>`);
+    metaEl.innerHTML = parts.join('<span class="meta-sep">·</span>');
+    metaEl.style.display = parts.length ? '' : 'none';
+
+    // Descrição — oculta se vazia
+    const descWrap = document.getElementById('projectDescWrap');
+    const descEl   = document.getElementById('projectDesc');
+    const hasDesc  = project.description && project.description.trim();
+    if (hasDesc) {
+      descEl.textContent = project.description;
+      descWrap.style.display = '';
+    } else {
+      descWrap.style.display = 'none';
+    }
+
+    const media = getProjectMedia(project);
+    document.getElementById('totalImgNum').textContent = media.length;
     renderGallery(project);
 
     document.getElementById('projectModal').classList.add('open');
@@ -3166,50 +2996,120 @@
   }
 
   function renderGallery(project) {
-    const mainImg = document.getElementById('galleryMainImg');
+    const mediaBox = document.getElementById('galleryMainMedia');
     const thumbs = document.getElementById('galleryThumbnails');
+    const media = getProjectMedia(project);
+    const current = media[currentGalleryImageIndex];
 
-    mainImg.src = project.images[currentGalleryImageIndex];
     document.getElementById('currentImgNum').textContent = currentGalleryImageIndex + 1;
 
-    thumbs.innerHTML = project.images.map((img, idx) => `
-      <img src="${img}" alt="" class="${idx === currentGalleryImageIndex ? 'active' : ''}" onclick="goToGalleryImage(${idx})"/>
-    `).join('');
+    if (current.type === 'video') {
+      mediaBox.innerHTML = `<video src="${current.dataUrl}" controls autoplay style="width:100%;height:100%;object-fit:contain;"></video>`;
+    } else {
+      mediaBox.innerHTML = `<img src="${current.dataUrl}" alt="" style="width:100%;height:100%;object-fit:contain;"/>`;
+    }
+
+    thumbs.innerHTML = media.map((item, idx) => {
+      const active = idx === currentGalleryImageIndex ? 'active' : '';
+      if (item.type === 'video') {
+        return `<div onclick="goToGalleryImage(${idx})" style="width:80px;height:80px;flex-shrink:0;cursor:pointer;border-radius:2px;border:2px solid ${active ? 'var(--purple)' : 'transparent'};background:var(--slate);display:flex;align-items:center;justify-content:center;font-size:1.8rem;transition:all 0.2s;">▶</div>`;
+      }
+      return `<img src="${item.dataUrl}" alt="" class="${active}" onclick="goToGalleryImage(${idx})" style="width:80px;height:80px;object-fit:cover;border-radius:2px;cursor:pointer;border:2px solid ${active ? 'var(--purple)' : 'transparent'};transition:all 0.2s;flex-shrink:0;"/>`;
+    }).join('');
   }
 
   function prevGalleryImage() {
-    const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
     const project = projects.find(p => p.id === currentProjectIndex);
-    
-    currentGalleryImageIndex = (currentGalleryImageIndex - 1 + project.images.length) % project.images.length;
+    const media = getProjectMedia(project);
+    currentGalleryImageIndex = (currentGalleryImageIndex - 1 + media.length) % media.length;
     renderGallery(project);
   }
 
   function nextGalleryImage() {
-    const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
     const project = projects.find(p => p.id === currentProjectIndex);
-    
-    currentGalleryImageIndex = (currentGalleryImageIndex + 1) % project.images.length;
+    const media = getProjectMedia(project);
+    currentGalleryImageIndex = (currentGalleryImageIndex + 1) % media.length;
     renderGallery(project);
   }
 
   function goToGalleryImage(idx) {
     currentGalleryImageIndex = idx;
-    const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
     const project = projects.find(p => p.id === currentProjectIndex);
     renderGallery(project);
   }
 
-  function openPortfolioProject(itemNum) {
-    const projects = JSON.parse(sessionStorage.getItem('projects') || '[]');
-    // Encontra o projeto por ID ou número
-    const project = projects[itemNum - 1] || projects.find(p => p.id === itemNum);
-    
-    if (project) {
-      openProjectModal(project.id);
-    } else {
-      alert('Este projeto ainda não foi configurado pelo administrador');
+  function openPortfolioProject(projectId) {
+    openProjectModal(projectId);
+  }
+
+  // padrões de span para o grid masonry (ciclam a cada 6 itens)
+  const GRID_SPANS = [
+    'grid-column:span 7;grid-row:span 2;',
+    'grid-column:span 5;grid-row:span 1;',
+    'grid-column:span 5;grid-row:span 1;',
+    'grid-column:span 4;grid-row:span 2;',
+    'grid-column:span 4;grid-row:span 2;',
+    'grid-column:span 4;grid-row:span 2;',
+  ];
+
+  function renderPortfolioGrid() {
+    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+    const grid = document.getElementById('portfolioGrid');
+    if (!grid) return;
+
+    if (projects.length === 0) {
+      grid.innerHTML = `
+        <div class="portfolio-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <p>Nenhum projeto adicionado ainda.<br>Acesse o painel admin para criar seu portfólio.</p>
+        </div>`;
+      return;
     }
+
+    grid.innerHTML = projects.map((proj, idx) => {
+      const span   = GRID_SPANS[idx % GRID_SPANS.length];
+      const media  = proj.media || (proj.images || []).map(d => ({ type: 'image', dataUrl: d }));
+      const thumb  = proj.thumbnail || (media[0] && media[0].dataUrl) || '';
+      const hasVid = media.some(m => m.type === 'video');
+      const cat    = (proj.category || '').trim();
+      const title  = (proj.title   || '').trim();
+
+      const catLabel = { foto: 'Fotografia', video: 'Vídeo', evento: 'Evento' }[cat] || cat;
+
+      return `
+        <div class="portfolio-item" data-cat="${cat}" style="${span}" onclick="openPortfolioProject(${proj.id})">
+          ${thumb
+            ? `<img class="portfolio-img" src="${thumb}" alt="${title}"/>`
+            : ''
+          }
+          ${hasVid ? `<div class="portfolio-video-badge">▶</div>` : ''}
+          <div class="portfolio-overlay">
+            <div class="portfolio-info">
+              ${cat   ? `<div class="portfolio-cat">${catLabel}</div>`  : ''}
+              ${title ? `<div class="portfolio-title">${title}</div>` : ''}
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+
+    // reaplica filtro ativo se houver
+    if (activeFilter && activeFilter !== 'all') {
+      grid.querySelectorAll('.portfolio-item').forEach(item => {
+        const show = item.dataset.cat === activeFilter;
+        item.style.opacity = show ? '1' : '0.2';
+        item.style.pointerEvents = show ? 'auto' : 'none';
+      });
+    }
+
+    // reativa observer de reveal nos novos itens
+    grid.querySelectorAll('.portfolio-item').forEach(el => observer.observe(el));
   }
 
   // ── CONTACTS MANAGEMENT ──
@@ -3232,7 +3132,7 @@
     }
 
     // Ordena por mais recente
-    contacts.sort((a, b) => new Date(b.data + ' ' + b.hora) - new Date(a.data + ' ' + a.hora));
+    contacts.sort((a, b) => (b.id || 0) - (a.id || 0));
 
     list.innerHTML = contacts.map((contact, idx) => `
       <div class="contact-card">
@@ -3256,7 +3156,7 @@
         </div>
 
         <div class="contact-card-actions">
-          <button class="contact-btn" onclick="deleteContact(${idx})">
+          <button class="contact-btn" onclick="deleteContact(${contact.id})">
             Deletar
           </button>
         </div>
@@ -3264,11 +3164,11 @@
     `).join('');
   }
 
-  function deleteContact(idx) {
+  function deleteContact(id) {
     if (!confirm('Deletar esta mensagem?')) return;
-    
+
     let contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
-    contacts.splice(idx, 1);
+    contacts = contacts.filter(c => c.id !== id);
     localStorage.setItem('contacts', JSON.stringify(contacts));
     loadContacts();
   }
@@ -3297,43 +3197,35 @@
     }
   }
 
-  function processHeroFile(file) {
-    // Validação de segurança - apenas imagens e vídeos
+  async function processHeroFile(file) {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'video/mp4', 'video/webm'];
     if (!allowedTypes.includes(file.type)) {
-      alert('❌ Tipo de arquivo inválido. Use: JPG, PNG, WebP, GIF, MP4 ou WebM');
+      alert('❌ Tipo inválido. Use: JPG, PNG, WebP, GIF, MP4 ou WebM');
       return;
     }
 
-    // Validação de tamanho (máx 10MB)
-    const maxSize = 10 * 1024 * 1024;
-    if (file.size > maxSize) {
-      alert('❌ Arquivo muito grande. Máximo: 10MB');
-      return;
-    }
+    const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+    const previewDiv = document.getElementById('heroPreview');
+    previewDiv.innerHTML = `<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:0.85rem;">
+      <div style="width:32px;height:32px;border:2px solid var(--purple);border-top-color:transparent;border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 0.8rem;"></div>
+      Enviando para a nuvem...
+    </div>`;
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const dataUrl = e.target.result;
-      
-      // Sanitizar nome do arquivo
-      const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-      
-      // Salvar no sessionStorage
-      sessionStorage.setItem('hero_media', dataUrl);
-      sessionStorage.setItem('hero_media_name', safeName);
-      sessionStorage.setItem('hero_media_type', file.type);
-      
-      // Carregar preview
+    try {
+      const url = await uploadToCloudinary(file);
+      localStorage.setItem('hero_media', url);
+      localStorage.setItem('hero_media_name', safeName);
+      localStorage.setItem('hero_media_type', file.type);
       loadHeroMedia();
-    };
-    reader.readAsDataURL(file);
+    } catch (err) {
+      previewDiv.innerHTML = `<p style="color:#ff6b6b;font-size:0.85rem;text-align:center;padding:1rem;">❌ Erro no upload: ${err.message}</p>`;
+    }
   }
 
   function loadHeroMedia() {
-    const mediaData = sessionStorage.getItem('hero_media');
-    const mediaName = sessionStorage.getItem('hero_media_name');
-    const mediaType = sessionStorage.getItem('hero_media_type');
+    const mediaData = localStorage.getItem('hero_media');
+    const mediaName = localStorage.getItem('hero_media_name');
+    const mediaType = localStorage.getItem('hero_media_type');
     const previewDiv = document.getElementById('heroPreview');
 
     if (!mediaData) {
@@ -3361,7 +3253,7 @@
   }
 
   function applyHeroMedia() {
-    const mediaData = sessionStorage.getItem('hero_media');
+    const mediaData = localStorage.getItem('hero_media');
     if (mediaData) {
       // Aplicar ao Hero
       const hero = document.querySelector('#hero');
@@ -3376,9 +3268,9 @@
 
   function removeHeroMedia() {
     if (confirm('Remover esta mídia?')) {
-      sessionStorage.removeItem('hero_media');
-      sessionStorage.removeItem('hero_media_name');
-      sessionStorage.removeItem('hero_media_type');
+      localStorage.removeItem('hero_media');
+      localStorage.removeItem('hero_media_name');
+      localStorage.removeItem('hero_media_type');
       document.getElementById('heroFile').value = '';
       loadHeroMedia();
     }
@@ -3409,35 +3301,33 @@
     }
   }
 
-  function processAboutFile(file) {
+  async function processAboutFile(file) {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
     if (!allowedTypes.includes(file.type)) {
       alert('❌ Tipo inválido. Use: JPG, PNG, WebP ou GIF');
       return;
     }
 
-    const maxSize = 10 * 1024 * 1024;
-    if (file.size > maxSize) {
-      alert('❌ Arquivo muito grande. Máximo: 10MB');
-      return;
-    }
+    const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+    const previewDiv = document.getElementById('aboutPreview');
+    previewDiv.innerHTML = `<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:0.85rem;">
+      <div style="width:32px;height:32px;border:2px solid var(--purple);border-top-color:transparent;border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 0.8rem;"></div>
+      Enviando para a nuvem...
+    </div>`;
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const dataUrl = e.target.result;
-      const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-      
-      sessionStorage.setItem('about_image', dataUrl);
-      sessionStorage.setItem('about_image_name', safeName);
-      
+    try {
+      const url = await uploadToCloudinary(file);
+      localStorage.setItem('about_image', url);
+      localStorage.setItem('about_image_name', safeName);
       loadAboutImage();
-    };
-    reader.readAsDataURL(file);
+    } catch (err) {
+      previewDiv.innerHTML = `<p style="color:#ff6b6b;font-size:0.85rem;text-align:center;padding:1rem;">❌ Erro no upload: ${err.message}</p>`;
+    }
   }
 
   function loadAboutImage() {
-    const imageData = sessionStorage.getItem('about_image');
-    const imageName = sessionStorage.getItem('about_image_name');
+    const imageData = localStorage.getItem('about_image');
+    const imageName = localStorage.getItem('about_image_name');
     const previewDiv = document.getElementById('aboutPreview');
 
     if (!imageData) {
@@ -3460,7 +3350,7 @@
   }
 
   function applyAboutImage() {
-    const imageData = sessionStorage.getItem('about_image');
+    const imageData = localStorage.getItem('about_image');
     if (imageData) {
       const wrap = document.querySelector('.about-image-wrap');
       if (wrap) {
@@ -3481,8 +3371,8 @@
 
   function removeAboutImage() {
     if (confirm('Remover esta imagem?')) {
-      sessionStorage.removeItem('about_image');
-      sessionStorage.removeItem('about_image_name');
+      localStorage.removeItem('about_image');
+      localStorage.removeItem('about_image_name');
       document.getElementById('aboutFile').value = '';
       const wrap = document.querySelector('.about-image-wrap');
       if (wrap) {
@@ -3495,123 +3385,18 @@
     }
   }
 
-  // ── VIDEOS MANAGEMENT ──
-  function getVideoEmbedUrl(url) {
-    try {
-      const u = new URL(url);
-      // YouTube
-      if (u.hostname.includes('youtube.com')) {
-        const id = u.searchParams.get('v');
-        return id ? `https://www.youtube.com/embed/${id}` : null;
-      }
-      if (u.hostname.includes('youtu.be')) {
-        const id = u.pathname.slice(1);
-        return id ? `https://www.youtube.com/embed/${id}` : null;
-      }
-      // Vimeo
-      if (u.hostname.includes('vimeo.com')) {
-        const id = u.pathname.split('/').filter(Boolean).pop();
-        return id ? `https://player.vimeo.com/video/${id}` : null;
-      }
-    } catch {}
-    return null;
-  }
-
-  function showVideosTab() {
-    document.querySelectorAll('.projects-tab-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.projects-tab').forEach(el => el.classList.remove('active'));
-    document.getElementById('tabVideos').classList.add('active');
-    document.querySelectorAll('.projects-tab')[5].classList.add('active');
-    renderVideosAdminList();
-  }
-
-  function saveVideo(e) {
-    e.preventDefault();
-    const url = document.getElementById('videoUrl').value.trim();
-    const title = document.getElementById('videoTitle').value.trim();
-    const desc = document.getElementById('videoDesc').value.trim();
-
-    const embedUrl = getVideoEmbedUrl(url);
-    if (!embedUrl) {
-      alert('❌ URL inválida. Use links do YouTube (watch?v=...) ou Vimeo.');
-      return;
-    }
-
-    let videos = JSON.parse(sessionStorage.getItem('site_videos') || '[]');
-    videos.push({ id: Date.now(), url, embedUrl, title, desc });
-    sessionStorage.setItem('site_videos', JSON.stringify(videos));
-
-    e.target.reset();
-    renderVideosAdminList();
-    renderVideosSection();
-    alert('✓ Vídeo adicionado com sucesso!');
-  }
-
-  function deleteVideo(id) {
-    if (!confirm('Remover este vídeo do site?')) return;
-    let videos = JSON.parse(sessionStorage.getItem('site_videos') || '[]');
-    videos = videos.filter(v => v.id !== id);
-    sessionStorage.setItem('site_videos', JSON.stringify(videos));
-    renderVideosAdminList();
-    renderVideosSection();
-  }
-
-  function renderVideosAdminList() {
-    const videos = JSON.parse(sessionStorage.getItem('site_videos') || '[]');
-    const list = document.getElementById('videosAdminList');
-    if (!list) return;
-    if (videos.length === 0) {
-      list.innerHTML = '<p style="color:var(--muted);font-size:0.8rem;margin-top:0.5rem;">Nenhum vídeo adicionado ainda.</p>';
-      return;
-    }
-    list.innerHTML = videos.map(v => `
-      <div class="video-admin-item">
-        <div class="video-admin-item-info">
-          <strong>${v.title}</strong>
-          <span>${v.url}</span>
-        </div>
-        <button class="project-item-btn" onclick="deleteVideo(${v.id})">Remover</button>
-      </div>
-    `).join('');
-  }
-
-  function renderVideosSection() {
-    const videos = JSON.parse(sessionStorage.getItem('site_videos') || '[]');
-    const grid = document.getElementById('videosGrid');
-    if (!grid) return;
-    if (videos.length === 0) {
-      grid.innerHTML = `
-        <div class="videos-empty">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-          </svg>
-          <p>Nenhum vídeo adicionado ainda.<br>Acesse o painel admin para adicionar vídeos.</p>
-        </div>`;
-      return;
-    }
-    grid.innerHTML = videos.map(v => `
-      <div class="video-card reveal">
-        <div class="video-embed">
-          <iframe src="${v.embedUrl}" allowfullscreen loading="lazy" title="${v.title}"></iframe>
-        </div>
-        <div class="video-info">
-          <h4>${v.title}</h4>
-          ${v.desc ? `<p>${v.desc}</p>` : ''}
-        </div>
-      </div>
-    `).join('');
-
-    // Re-observar elementos reveal novos
-    grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  }
+  // versão visível no rodapé — confirma qual build está rodando
+  const SITE_VERSION = 'v504a12a';
+  const verEl = document.getElementById('siteVersion');
+  if (verEl) verEl.textContent = SITE_VERSION;
 
   window.addEventListener('load', () => {
-    checkAdminStatus();
+    renderPortfolioGrid();
     loadProjects();
-    renderVideosSection();
+    checkAdminStatus();
 
     // Carregar imagem da seção Sobre se existir
-    const aboutImage = sessionStorage.getItem('about_image');
+    const aboutImage = localStorage.getItem('about_image');
     if (aboutImage) {
       const wrap = document.querySelector('.about-image-wrap');
       if (wrap) {
@@ -3628,3 +3413,4 @@
 </script>
 </body>
 </html>
+
