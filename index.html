@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet"/>
 <style>
   :root {
+    /* ── paleta original ── */
     --black: #0a0a0a;
     --carbon: #111111;
     --slate: #1c1c1c;
@@ -20,6 +21,43 @@
     --white: #f5f3ef;
     --muted: #7a7a7a;
     --border: rgba(124, 58, 237, 0.2);
+
+    /* ── paleta expandida da marca ── */
+    --purple-deep:  #4c1d95;
+    --purple-rich:  #5b21b6;
+    --purple-pale:  #ede9fe;
+    --accent-warm:  #d97706;   /* âmbar quente como contraponto */
+
+    /* ── gradientes de marca ── */
+    --grad-brand:   linear-gradient(135deg, var(--purple-deep) 0%, var(--purple) 55%, var(--purple-light) 100%);
+    --grad-border:  linear-gradient(135deg, var(--purple-rich), var(--purple-light), var(--purple-rich));
+    --grad-shimmer: linear-gradient(105deg, transparent 35%, rgba(167,139,250,0.18) 50%, transparent 65%);
+
+    /* ── tipografia: letter-spacing refinado ── */
+    --ls-tight:   0.02em;
+    --ls-base:    0.08em;
+    --ls-wide:    0.15em;
+    --ls-wider:   0.25em;
+    --ls-widest:  0.35em;
+
+    /* ── escala harmônica de fontes (progressão × 1.25 — major third) ── */
+    --fs-2xs: 0.512rem;
+    --fs-xs:  0.64rem;
+    --fs-sm:  0.8rem;
+    --fs-md:  1.25rem;
+    --fs-lg:  1.563rem;
+    --fs-xl:  1.953rem;
+    --fs-2xl: 2.441rem;
+
+    /* ── espaçamento: proporção áurea (φ = 1.618) ── */
+    --sp-1: 0.382rem;
+    --sp-2: 0.618rem;
+    --sp-3: 1rem;
+    --sp-4: 1.618rem;
+    --sp-5: 2.618rem;
+    --sp-6: 4.236rem;
+    --sp-7: 6.854rem;
+    --sp-8: 11.09rem;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1028,6 +1066,184 @@
     .marquee-track { animation: none; }
     .reveal { opacity: 1; transform: none; transition: none; }
     .cursor, .cursor-ring { display: none; }
+  }
+
+  /* ════════════════════════════════════════════
+     DESIGN SYSTEM UPGRADE
+     ════════════════════════════════════════════ */
+
+  /* ── 1. LETTER-SPACING APLICADO ── */
+  .section-eyebrow,
+  .hero-eyebrow       { letter-spacing: var(--ls-wider); }
+  .section-title,
+  .hero-title         { letter-spacing: var(--ls-tight); }
+  .service-name,
+  .step-title         { letter-spacing: var(--ls-base); }
+  .nav-links a        { letter-spacing: var(--ls-wide); }
+  .tag                { letter-spacing: var(--ls-wider); }
+  .btn-primary,
+  .btn-ghost,
+  .form-submit,
+  .nav-cta            { letter-spacing: var(--ls-wide); }
+  .portfolio-cat,
+  .section-eyebrow    { letter-spacing: var(--ls-widest); }
+
+  /* ── 2. BORDAS EM GRADIENTE ── */
+
+  /* Nav scrolled */
+  nav.scrolled {
+    border-bottom: 1px solid transparent;
+    background:
+      linear-gradient(rgba(10,10,10,0.93), rgba(10,10,10,0.93)) padding-box,
+      var(--grad-border) border-box;
+  }
+
+  /* Service card: barra superior vira gradiente */
+  .service-card::before {
+    background: var(--grad-brand);
+  }
+
+  /* Tags: borda gradiente */
+  .tag {
+    border: 1px solid transparent;
+    background:
+      var(--carbon) padding-box,
+      linear-gradient(135deg, var(--purple), var(--purple-light)) border-box;
+    transition: color 0.3s;
+  }
+  .tag:hover { color: var(--purple-light); }
+
+  /* Contact method icon */
+  .method-icon {
+    border: 1px solid transparent;
+    background:
+      var(--carbon) padding-box,
+      var(--grad-border) border-box;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid transparent;
+    background:
+      var(--black) padding-box,
+      var(--grad-border) border-box;
+  }
+
+  /* Linha do processo: gradiente */
+  .step-line {
+    background: var(--grad-brand);
+  }
+
+  /* Portfolio item glow no hover */
+  .portfolio-item:hover {
+    box-shadow: 0 0 0 1.5px var(--purple-light), 0 0 30px rgba(124,58,237,0.18);
+  }
+
+  /* ── 3. CLIP-PATH EXCLUSIVOS ── */
+
+  /* Botões: corte diagonal no canto inferior-direito (chanfrado) */
+  .btn-primary,
+  .nav-cta,
+  .form-submit {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%);
+  }
+  .btn-primary:hover,
+  .nav-cta:hover,
+  .form-submit:hover {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 13px), calc(100% - 13px) 100%, 0 100%);
+  }
+
+  /* About badge: corte diagonal no canto superior-esquerdo */
+  .about-badge {
+    clip-path: polygon(18px 0, 100% 0, 100% 100%, 0 100%, 0 18px);
+  }
+
+  /* Eyebrow bars: leve ângulo */
+  .section-eyebrow::before,
+  .hero-eyebrow::before {
+    clip-path: polygon(0 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+  }
+
+  /* ── 4. HERO ITALIC: TEXTO EM GRADIENTE ── */
+  .hero-title .italic {
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent; /* fallback */
+  }
+
+  /* ── 5. MICRO-INTERACTIONS ── */
+
+  /* Shimmer nos botões primários */
+  .btn-primary,
+  .nav-cta,
+  .form-submit {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::after,
+  .nav-cta::after,
+  .form-submit::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--grad-shimmer);
+    background-size: 200% 100%;
+    opacity: 0;
+    transform: translateX(-120%);
+    transition: transform 0.55s ease, opacity 0.3s;
+    pointer-events: none;
+  }
+  .btn-primary:hover::after,
+  .nav-cta:hover::after,
+  .form-submit:hover::after {
+    opacity: 1;
+    transform: translateX(120%);
+  }
+
+  /* Process step number: pulse de luz no hover */
+  .process-step:hover .step-number {
+    color: rgba(124,58,237,0.35);
+    text-shadow: 0 0 60px rgba(124,58,237,0.4), 0 0 20px rgba(167,139,250,0.2);
+  }
+
+  /* Service icon: sobe levemente no hover */
+  .service-card:hover .service-icon {
+    transform: translateY(-4px);
+    color: var(--purple-light);
+  }
+  .service-icon {
+    transition: transform 0.35s ease, color 0.3s;
+  }
+
+  /* ── 5b. STAGGER NOS CARDS DE SERVIÇO ── */
+  .services-grid .service-card { transition-delay: 0s; }
+  .services-grid .service-card:nth-child(1) .reveal { transition-delay: 0.06s; }
+  .services-grid .service-card:nth-child(2) .reveal { transition-delay: 0.13s; }
+  .services-grid .service-card:nth-child(3) .reveal { transition-delay: 0.20s; }
+  .services-grid .service-card:nth-child(4) .reveal { transition-delay: 0.27s; }
+  .services-grid .service-card:nth-child(5) .reveal { transition-delay: 0.34s; }
+  .services-grid .service-card:nth-child(6) .reveal { transition-delay: 0.41s; }
+
+  /* Stagger nos process steps */
+  .process-list .process-step:nth-child(1) { transition-delay: 0.05s; }
+  .process-list .process-step:nth-child(2) { transition-delay: 0.15s; }
+  .process-list .process-step:nth-child(3) { transition-delay: 0.25s; }
+  .process-list .process-step:nth-child(4) { transition-delay: 0.35s; }
+
+  /* ── 6. RITMO VISUAL: PROPORÇÃO ÁUREA NOS ESPAÇAMENTOS ── */
+  @media (min-width: 769px) {
+    #servicos  { padding: var(--sp-8) 3rem; }
+    #portfolio { padding: var(--sp-8) 3rem; }
+    #sobre     { padding: var(--sp-8) 3rem; }
+    #processo  { padding: var(--sp-8) 3rem; }
+    #contato   { padding: var(--sp-8) 3rem; }
+
+    .section-header  { margin-bottom: var(--sp-7); }
+    .about-body      { margin: var(--sp-5) 0 var(--sp-6); }
+    .process-list    { margin-top: var(--sp-7); }
+    .contact-methods { gap: var(--sp-5); }
   }
 
   /* ── ADMIN PANEL ── */
@@ -2483,6 +2699,32 @@
 </footer>
 
 <script>
+  // ── EFEITO MAGNÉTICO NOS BOTÕES ──
+  document.querySelectorAll('.btn-primary, .nav-cta').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width  / 2) * 0.18;
+      const y = (e.clientY - r.top  - r.height / 2) * 0.18;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+
+  // ── SCROLL TRIGGER COM STAGGER NOS ITENS DO PORTFÓLIO ──
+  const portfolioObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.portfolio-item').forEach((item, i) => {
+          setTimeout(() => item.style.opacity = '1', i * 80);
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+  const portfolioGrid = document.getElementById('portfolioGrid');
+  if (portfolioGrid) portfolioObserver.observe(portfolioGrid);
+
   // Cursor
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
