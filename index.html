@@ -2438,6 +2438,7 @@
 <footer>
   <a href="#" class="footer-logo">MH CREATIVEWORKS</a>
   <span class="footer-copy">© 2025 MH Creativeworks · Santa Catarina, Brasil</span>
+  <span id="siteVersion" style="font-size:0.55rem;color:rgba(122,122,122,0.4);letter-spacing:0.08em;"></span>
   <div class="footer-links">
     <a href="#servicos">Serviços</a>
     <a href="#portfolio">Portfólio</a>
@@ -3383,6 +3384,11 @@
       loadAboutImage();
     }
   }
+
+  // versão visível no rodapé — confirma qual build está rodando
+  const SITE_VERSION = 'v504a12a';
+  const verEl = document.getElementById('siteVersion');
+  if (verEl) verEl.textContent = SITE_VERSION;
 
   window.addEventListener('load', () => {
     renderPortfolioGrid();
