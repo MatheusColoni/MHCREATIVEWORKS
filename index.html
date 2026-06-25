@@ -1663,6 +1663,155 @@
     background: rgba(231,76,60,0.1);
   }
 
+  /* ── VIDEOS SECTION ── */
+  #videos {
+    padding: 8rem 3rem;
+    background: var(--black);
+  }
+
+  .videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .video-card {
+    background: var(--slate);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .video-card:hover {
+    border-color: var(--purple);
+    transform: translateY(-4px);
+  }
+
+  .video-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .video-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .video-info {
+    padding: 1.2rem 1.5rem;
+  }
+
+  .video-info h4 {
+    color: var(--white);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+  }
+
+  .video-info p {
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .videos-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+  }
+
+  .videos-empty svg {
+    width: 48px; height: 48px;
+    color: var(--purple);
+    opacity: 0.3;
+    margin-bottom: 1rem;
+  }
+
+  .video-admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .video-admin-form .form-group label {
+    color: var(--muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .video-admin-form .form-group input,
+  .video-admin-form .form-group textarea {
+    background: var(--carbon);
+    border: 1px solid rgba(124,58,237,0.2);
+    border-bottom: 1px solid rgba(124,58,237,0.4);
+    color: var(--white);
+    padding: 0.7rem 0.8rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+
+  .video-admin-form .form-group input:focus,
+  .video-admin-form .form-group textarea:focus {
+    border-bottom-color: var(--purple);
+  }
+
+  .videos-admin-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+
+  .video-admin-item {
+    background: var(--carbon);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+  }
+
+  .video-admin-item-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .video-admin-item-info strong {
+    color: var(--white);
+    font-size: 0.8rem;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .video-admin-item-info span {
+    color: var(--muted);
+    font-size: 0.7rem;
+  }
+
+  @media (max-width: 768px) {
+    #videos { padding: 4rem 1.5rem; }
+    .videos-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+  }
+
   /* ── LOGIN MODAL ── */
   .login-overlay {
     position: fixed;
@@ -1773,6 +1922,7 @@
   <ul class="nav-links">
     <li><a href="#servicos">Serviços</a></li>
     <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#videos">Vídeos</a></li>
     <li><a href="#sobre">Sobre</a></li>
     <li><a href="#processo">Processo</a></li>
   </ul>
@@ -2062,6 +2212,7 @@
       <button class="projects-tab" onclick="showContactsTab()">💬 Mensagens</button>
       <button class="projects-tab" onclick="showMediaTab()">🎬 Mídia Hero</button>
       <button class="projects-tab" onclick="showAboutImageTab()">🖼️ Sobre Nós</button>
+      <button class="projects-tab" onclick="showVideosTab()">▶️ Vídeos</button>
     </div>
 
     <!-- ABA: LISTA DE PROJETOS -->
@@ -2157,6 +2308,30 @@
           <strong>💡 Dica:</strong> Use imagens em alta qualidade (1920x1080px ou maior). Vídeos serão convertidos para poster automático.
         </p>
       </div>
+    </div>
+
+    <!-- ABA: VÍDEOS -->
+    <div class="projects-tab-content" id="tabVideos">
+      <h4 style="color: var(--white); margin-bottom: 0.5rem;">Adicionar Vídeo</h4>
+      <p style="color: var(--muted); font-size: 0.82rem; margin-bottom: 1.2rem;">Cole a URL do YouTube ou Vimeo para exibir na seção de vídeos do site.</p>
+
+      <form class="video-admin-form" onsubmit="saveVideo(event)">
+        <div class="form-group">
+          <label>URL do Vídeo (YouTube ou Vimeo)</label>
+          <input type="url" id="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required/>
+        </div>
+        <div class="form-group">
+          <label>Título</label>
+          <input type="text" id="videoTitle" placeholder="Ex: Clipe Institucional Marca X" required/>
+        </div>
+        <div class="form-group">
+          <label>Descrição (opcional)</label>
+          <textarea id="videoDesc" placeholder="Breve descrição do vídeo..." style="min-height:60px; resize: vertical;"></textarea>
+        </div>
+        <button type="submit" class="form-submit" style="align-self: flex-start; margin-top: 0.3rem;">Adicionar Vídeo</button>
+      </form>
+
+      <div class="videos-admin-list" id="videosAdminList"></div>
     </div>
 
     <!-- ABA: EDITAR IMAGEM SOBRE NÓS -->
@@ -2307,6 +2482,25 @@
     </div>
   </div>
 </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-eyebrow">Nossos vídeos</div>
+      <h2 class="section-title">Produções em Vídeo</h2>
+    </div>
+  </div>
+
+  <div class="videos-grid" id="videosGrid">
+    <div class="videos-empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+      </svg>
+      <p>Nenhum vídeo adicionado ainda.<br>Acesse o painel admin para adicionar vídeos.</p>
+    </div>
+  </div>
 </section>
 
 <!-- ABOUT -->
@@ -3268,11 +3462,18 @@
   function applyAboutImage() {
     const imageData = sessionStorage.getItem('about_image');
     if (imageData) {
-      const aboutVisual = document.querySelector('.about-visual');
-      if (aboutVisual) {
-        aboutVisual.style.backgroundImage = `url('${imageData}')`;
-        aboutVisual.style.backgroundSize = 'cover';
-        aboutVisual.style.backgroundPosition = 'center';
+      const wrap = document.querySelector('.about-image-wrap');
+      if (wrap) {
+        let img = wrap.querySelector('img.about-img-applied');
+        if (!img) {
+          img = document.createElement('img');
+          img.className = 'about-img-applied';
+          img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;';
+          wrap.appendChild(img);
+        }
+        img.src = imageData;
+        const icon = wrap.querySelector('.about-image-icon');
+        if (icon) icon.style.display = 'none';
       }
       alert('✓ Imagem aplicada à seção Sobre!');
     }
@@ -3283,21 +3484,144 @@
       sessionStorage.removeItem('about_image');
       sessionStorage.removeItem('about_image_name');
       document.getElementById('aboutFile').value = '';
+      const wrap = document.querySelector('.about-image-wrap');
+      if (wrap) {
+        const img = wrap.querySelector('img.about-img-applied');
+        if (img) img.remove();
+        const icon = wrap.querySelector('.about-image-icon');
+        if (icon) icon.style.display = '';
+      }
       loadAboutImage();
     }
+  }
+
+  // ── VIDEOS MANAGEMENT ──
+  function getVideoEmbedUrl(url) {
+    try {
+      const u = new URL(url);
+      // YouTube
+      if (u.hostname.includes('youtube.com')) {
+        const id = u.searchParams.get('v');
+        return id ? `https://www.youtube.com/embed/${id}` : null;
+      }
+      if (u.hostname.includes('youtu.be')) {
+        const id = u.pathname.slice(1);
+        return id ? `https://www.youtube.com/embed/${id}` : null;
+      }
+      // Vimeo
+      if (u.hostname.includes('vimeo.com')) {
+        const id = u.pathname.split('/').filter(Boolean).pop();
+        return id ? `https://player.vimeo.com/video/${id}` : null;
+      }
+    } catch {}
+    return null;
+  }
+
+  function showVideosTab() {
+    document.querySelectorAll('.projects-tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.projects-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById('tabVideos').classList.add('active');
+    document.querySelectorAll('.projects-tab')[5].classList.add('active');
+    renderVideosAdminList();
+  }
+
+  function saveVideo(e) {
+    e.preventDefault();
+    const url = document.getElementById('videoUrl').value.trim();
+    const title = document.getElementById('videoTitle').value.trim();
+    const desc = document.getElementById('videoDesc').value.trim();
+
+    const embedUrl = getVideoEmbedUrl(url);
+    if (!embedUrl) {
+      alert('❌ URL inválida. Use links do YouTube (watch?v=...) ou Vimeo.');
+      return;
+    }
+
+    let videos = JSON.parse(sessionStorage.getItem('site_videos') || '[]');
+    videos.push({ id: Date.now(), url, embedUrl, title, desc });
+    sessionStorage.setItem('site_videos', JSON.stringify(videos));
+
+    e.target.reset();
+    renderVideosAdminList();
+    renderVideosSection();
+    alert('✓ Vídeo adicionado com sucesso!');
+  }
+
+  function deleteVideo(id) {
+    if (!confirm('Remover este vídeo do site?')) return;
+    let videos = JSON.parse(sessionStorage.getItem('site_videos') || '[]');
+    videos = videos.filter(v => v.id !== id);
+    sessionStorage.setItem('site_videos', JSON.stringify(videos));
+    renderVideosAdminList();
+    renderVideosSection();
+  }
+
+  function renderVideosAdminList() {
+    const videos = JSON.parse(sessionStorage.getItem('site_videos') || '[]');
+    const list = document.getElementById('videosAdminList');
+    if (!list) return;
+    if (videos.length === 0) {
+      list.innerHTML = '<p style="color:var(--muted);font-size:0.8rem;margin-top:0.5rem;">Nenhum vídeo adicionado ainda.</p>';
+      return;
+    }
+    list.innerHTML = videos.map(v => `
+      <div class="video-admin-item">
+        <div class="video-admin-item-info">
+          <strong>${v.title}</strong>
+          <span>${v.url}</span>
+        </div>
+        <button class="project-item-btn" onclick="deleteVideo(${v.id})">Remover</button>
+      </div>
+    `).join('');
+  }
+
+  function renderVideosSection() {
+    const videos = JSON.parse(sessionStorage.getItem('site_videos') || '[]');
+    const grid = document.getElementById('videosGrid');
+    if (!grid) return;
+    if (videos.length === 0) {
+      grid.innerHTML = `
+        <div class="videos-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+          </svg>
+          <p>Nenhum vídeo adicionado ainda.<br>Acesse o painel admin para adicionar vídeos.</p>
+        </div>`;
+      return;
+    }
+    grid.innerHTML = videos.map(v => `
+      <div class="video-card reveal">
+        <div class="video-embed">
+          <iframe src="${v.embedUrl}" allowfullscreen loading="lazy" title="${v.title}"></iframe>
+        </div>
+        <div class="video-info">
+          <h4>${v.title}</h4>
+          ${v.desc ? `<p>${v.desc}</p>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+    // Re-observar elementos reveal novos
+    grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   }
 
   window.addEventListener('load', () => {
     checkAdminStatus();
     loadProjects();
+    renderVideosSection();
+
     // Carregar imagem da seção Sobre se existir
     const aboutImage = sessionStorage.getItem('about_image');
     if (aboutImage) {
-      const aboutVisual = document.querySelector('.about-visual');
-      if (aboutVisual) {
-        aboutVisual.style.backgroundImage = `url('${aboutImage}')`;
-        aboutVisual.style.backgroundSize = 'cover';
-        aboutVisual.style.backgroundPosition = 'center';
+      const wrap = document.querySelector('.about-image-wrap');
+      if (wrap) {
+        const img = document.createElement('img');
+        img.className = 'about-img-applied';
+        img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;';
+        img.src = aboutImage;
+        wrap.appendChild(img);
+        const icon = wrap.querySelector('.about-image-icon');
+        if (icon) icon.style.display = 'none';
       }
     }
   });
