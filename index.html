@@ -1512,11 +1512,6 @@
   .project-header {
     margin-bottom: 1.8rem;
     padding-bottom: 1.8rem;
-    border-bottom: 1px solid transparent;
-    background:
-      linear-gradient(var(--slate), var(--slate)) padding-box,
-      var(--grad-border) border-box;
-    background-clip: padding-box, border-box;
     border-bottom: 1px solid;
     border-image: var(--grad-border) 1;
   }
@@ -2747,11 +2742,11 @@
   // Cursor
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
+  let mx = 0, my = 0, rx = 0, ry = 0, cursorHovered = false;
 
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
-    cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+    cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)${cursorHovered ? ' scale(2)' : ''}`;
   });
 
   function animateRing() {
@@ -2764,10 +2759,11 @@
 
   document.querySelectorAll('a, button, .portfolio-item, .service-card').forEach(el => {
     el.addEventListener('mouseenter', () => {
-      cursor.style.transform += ' scale(2)';
+      cursorHovered = true;
       ring.style.opacity = '0.9';
     });
     el.addEventListener('mouseleave', () => {
+      cursorHovered = false;
       ring.style.opacity = '0.5';
     });
   });
@@ -2787,6 +2783,7 @@
 
   // Portfolio filter
   function filterPortfolio(btn, cat) {
+    activeFilter = cat;
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.portfolio-item').forEach(item => {
@@ -3025,6 +3022,7 @@
       if (saved) {
         // Aplicar ao portfólio
         const item = document.querySelectorAll('.portfolio-item')[i - 1];
+        if (!item) continue;
         let img = item.querySelector('.portfolio-img');
         
         if (!img) {
@@ -3066,6 +3064,7 @@
   let currentProjectIndex = -1;
   let currentGalleryImageIndex = 0;
   let projectsTemp = [];
+  let activeFilter = 'all';
 
   function toggleAdminProjects() {
     const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
@@ -3190,7 +3189,12 @@
 
     let projects = JSON.parse(localStorage.getItem('projects') || '[]');
     projects.push(project);
-    localStorage.setItem('projects', JSON.stringify(projects));
+    try {
+      localStorage.setItem('projects', JSON.stringify(projects));
+    } catch (err) {
+      alert('❌ Erro ao salvar: arquivos muito grandes para o armazenamento local. Tente imagens menores ou reduza a quantidade de vídeos.');
+      return;
+    }
 
     alert('✓ Projeto salvo com sucesso!');
     document.getElementById('projectForm').reset();
@@ -3412,6 +3416,15 @@
         </div>`;
     }).join('');
 
+    // reaplica filtro ativo se houver
+    if (activeFilter && activeFilter !== 'all') {
+      grid.querySelectorAll('.portfolio-item').forEach(item => {
+        const show = item.dataset.cat === activeFilter;
+        item.style.opacity = show ? '1' : '0.2';
+        item.style.pointerEvents = show ? 'auto' : 'none';
+      });
+    }
+
     // reativa observer de reveal nos novos itens
     grid.querySelectorAll('.portfolio-item').forEach(el => observer.observe(el));
   }
@@ -3436,7 +3449,7 @@
     }
 
     // Ordena por mais recente
-    contacts.sort((a, b) => new Date(b.data + ' ' + b.hora) - new Date(a.data + ' ' + a.hora));
+    contacts.sort((a, b) => (b.id || 0) - (a.id || 0));
 
     list.innerHTML = contacts.map((contact, idx) => `
       <div class="contact-card">
@@ -3460,7 +3473,7 @@
         </div>
 
         <div class="contact-card-actions">
-          <button class="contact-btn" onclick="deleteContact(${idx})">
+          <button class="contact-btn" onclick="deleteContact(${contact.id})">
             Deletar
           </button>
         </div>
@@ -3468,11 +3481,11 @@
     `).join('');
   }
 
-  function deleteContact(idx) {
+  function deleteContact(id) {
     if (!confirm('Deletar esta mensagem?')) return;
-    
+
     let contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
-    contacts.splice(idx, 1);
+    contacts = contacts.filter(c => c.id !== id);
     localStorage.setItem('contacts', JSON.stringify(contacts));
     loadContacts();
   }
@@ -3700,9 +3713,9 @@
   }
 
   window.addEventListener('load', () => {
-    checkAdminStatus();
-    loadProjects();
     renderPortfolioGrid();
+    loadProjects();
+    checkAdminStatus();
 
     // Carregar imagem da seção Sobre se existir
     const aboutImage = localStorage.getItem('about_image');
